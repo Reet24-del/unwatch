@@ -24,6 +24,8 @@ Create a Free cluster (512 MB), a dedicated database user restricted to the UNWA
 
 Without MongoDB, local development writes `.data/store.json` with mode 0600. It fails closed on corrupt budget storage. This single-process fallback is not safe for multiple app instances or Render's ephemeral disk; production live mode refuses to start billable requests without MongoDB configured. A bad MongoDB connection stops server initialisation instead of falling back and losing budget counters.
 
+For the existing prototype, stop analysis on both local and public instances, set the complete URI in `.env`, then run `npm run setup:mongodb`. This checks connectivity, creates the caption-expiry index, and copies local budget reservations to MongoDB using atomic maximum updates, so retries cannot reduce existing counters. It deliberately leaves local sessions and caption caches on this device. Run this before starting Mongo-backed live analysis; it does not merge spending from independently active ledgers. A missing, empty, or invalid local ledger stops setup rather than silently starting a fresh budget. Keep the original ledger as a backup.
+
 ## 4. Auth0
 
 Create a Single Page Application and an API with an audience such as `https://unwatch-api`. Set:

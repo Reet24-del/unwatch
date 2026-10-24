@@ -25,7 +25,7 @@
 
 ## Remaining
 
-1. Atlas/Auth0 credentials and production callback/origin settings, then live hosted login, persistence and user-isolation verification.
+1. Atlas project and free cluster are created; the database user is restricted to `unwatch`, and the approved laptop/Render network entries are active. Auth0 SPA, RS256 API, exact callback/logout/origin URLs and user-delegated access are configured. Local and Render Auth0 configuration respond correctly. Local MongoDB connection and app-store write/read/remove checks passed; all six reservation counters were migrated without resetting them, and the TTL index was verified. The local API was restarted with MongoDB. Remaining: saving the URI on Render (awaiting credential-storage approval), completed login, hosted persistence and user-isolation verification. Google sign-in reaches its consent page; a completed authenticated session is not yet verified.
 2. A live rerun of long-course recovery and additional independent topic groups. The local reservation ledger is near its limit; it has not been reset.
 3. Final user review of the saved DEV draft. The user-approved AI-assisted disclosure is saved. The deployed replay/evidence/save/reload checks passed; the public walkthrough played and reported a 73.535-second duration.
 4. Publication of the DEV article through the official submission template. It is saved as an unpublished draft under Reet Singh; nothing has been submitted.
