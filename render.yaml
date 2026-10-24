@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: unwatch
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 22.22.0
+      - key: ENABLE_LIVE
+        value: 'false'
+      - key: APP_ORIGIN
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: AUTH0_DOMAIN
+        sync: false
+      - key: AUTH0_CLIENT_ID
+        sync: false
+      - key: AUTH0_AUDIENCE
+        sync: false
+      - key: SERPAPI_API_KEY
+        sync: false
+      - key: PAPERINSTRUMENTS_API_KEY
+        sync: false
