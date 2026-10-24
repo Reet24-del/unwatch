@@ -50,7 +50,7 @@ Create a Developer-plan project and set the server-only `SENTRY_DSN`. The app us
 
 ## 7. Render deployment
 
-`render.yaml` configures one free Node web service. Connect a repository containing this code using Render's dashboard/blueprint workflow. The app has not been published or deployed by this task. Build command: `npm ci && npm run build`. Start command: `npm start` with `NODE_ENV=production`. Health path: `/api/health`. Use Node 22.22 or newer.
+`render.yaml` configures one free Node web service. Connect a repository containing this code using Render's dashboard/blueprint workflow. Build command: `npm ci --include=dev && npm run build`. The explicit include is required because the production environment otherwise omits TypeScript and Vite. Start command: `npm start` with `NODE_ENV=production`. Health path: `/api/health`. Use Node 22.22 or newer.
 
 Set `APP_ORIGIN` to the exact public HTTPS URL, configure MongoDB/Auth0 first, then add server-side provider secrets. Free services sleep after inactivity and have ephemeral disk. Do not rely on local file storage or an always-on worker. Use the default Render domain; a paid domain is unnecessary.
 
