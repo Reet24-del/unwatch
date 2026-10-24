@@ -10,7 +10,7 @@
 - Distinct-detail assessment retains mixed content, useful caveats, examples and uncertain intervals. A malformed long-video part is retained with a notice. Partial usage does not produce an understated total-cost estimate.
 - Budget reservations, caching, URL/schema checks, rate limits, same-origin enforcement, and optional MongoDB/Auth0/Backboard/Sentry adapters.
 - Public source: https://github.com/Reet24-del/unwatch.
-- Free Render preview: https://unwatch-byeb.onrender.com. New public analysis is disabled pending production accounts. The first build issue (production npm omitting build tools) was fixed with `npm ci --include=dev`.
+- Free Render preview: https://unwatch-byeb.onrender.com. Public live analysis is enabled with SerpApi, Ultramarine, ElevenLabs, MongoDB Atlas and Auth0 configured. The first build issue (production npm omitting build tools) was fixed with `npm ci --include=dev`.
 - A 73-second narrated walkthrough from real captured UI states: https://unwatch-byeb.onrender.com/demo/. It is edited and uses offline synthetic speech.
 - A complete DEV article draft, demo script, evaluation and ordered tracker: `DEV_ARTICLE.md`, `DEMO_SCRIPT.md`, `QUALITY.md`, `TODO.md`.
 
@@ -23,10 +23,14 @@
 - Latest local interface inspected at 390px and 320px; console warning/error collection was empty. Screenshot: `design/mobile-final.png`.
 - Git uses the owner's private noreply address. `.env`, `.data`, `.qa`, dependencies and build output are ignored. A pre-publication scan found no configured provider secrets in staged files.
 
+## Connected accounts
+
+Atlas project and free cluster are created; the database user is restricted to `unwatch`, and the approved laptop/Render network entries are active. Auth0 SPA, RS256 API, exact callback/logout/origin URLs and user-delegated access are configured. Local and Render Auth0 configuration respond correctly. Local MongoDB connection and app-store write/read/remove checks passed; all six reservation counters were migrated without resetting them, and the TTL index was verified. The local API was restarted with MongoDB. The user approved saving the URI on Render; the deployment succeeded and public health/configuration checks confirm MongoDB and Auth0. Unauthenticated session access returns 401. Google sign-in, one fresh public React comparison, explicit account sync, and loading the comparison from account sessions passed. The result's paired caption evidence and selected-interval player were checked; console warnings/errors were empty. Unauthenticated comparisons return 401 and invalid URLs return 400. This test's model estimate was $0.00377995; it did not exercise ElevenLabs fallback. Settled model reservations were reconciled with explicit user approval against the official provider dashboard, retaining a safety buffer, the existing cap, and a MongoDB audit record. No provider funds were purchased.
+
 ## Remaining
 
-1. Atlas project and free cluster are created; the database user is restricted to `unwatch`, and the approved laptop/Render network entries are active. Auth0 SPA, RS256 API, exact callback/logout/origin URLs and user-delegated access are configured. Local and Render Auth0 configuration respond correctly. Local MongoDB connection and app-store write/read/remove checks passed; all six reservation counters were migrated without resetting them, and the TTL index was verified. The local API was restarted with MongoDB. Remaining: saving the URI on Render (awaiting credential-storage approval), completed login, hosted persistence and user-isolation verification. Google sign-in reaches its consent page; a completed authenticated session is not yet verified.
-2. A live rerun of long-course recovery and additional independent topic groups. The local reservation ledger is near its limit; it has not been reset.
+1. Verify isolation with two real signed-in accounts; only one real account was used in the public smoke test.
+2. A live rerun of long-course recovery and additional independent topic groups. Use the shared MongoDB ledger and check available allowance before another long run; do not rerun the initial local-ledger import after the approved reconciliation.
 3. Final user review of the saved DEV draft. The user-approved AI-assisted disclosure is saved. The deployed replay/evidence/save/reload checks passed; the public walkthrough played and reported a 73.535-second duration.
 4. Publication of the DEV article through the official submission template. It is saved as an unpublished draft under Reet Singh; nothing has been submitted.
 5. Optional partner paths need their own live evidence before those categories are added. Backboard memory deletion controls remain a wider-launch follow-up.
