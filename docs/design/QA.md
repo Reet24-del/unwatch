@@ -55,3 +55,13 @@ The implementation was reviewed for fidelity to the selected concept with the de
 The two reference/rendered designs were inspected directly with `view_image`, including desktop, narrow-phone and tablet captures. Remaining differences are deliberate functional additions and font/layout approximations documented above; this is not a pixel-identical reproduction.
 
 Post-polish checks: selection changed 18/32 to 30/20 then reset; save/reopen and an understood topic survived reload; the production bundle loaded its local assets with no console warnings/errors; empty library and its create-watchlist action worked; provider-disabled errors stayed explicit. Keyboard Enter opens evidence and Escape returns focus to the triggering topic button after the dialog focus cleanup was strengthened. Eleven regression tests and TypeScript/production build pass. Live caption comparison and YouTube playback still require credentials and separate verification.
+
+
+## Public release check — 24 October 2026
+
+- https://unwatch-byeb.onrender.com serves the final interface and the labeled recorded real comparison.
+- Production health, replay JSON, walkthrough page and MP4 returned HTTP 200. The MP4 is 1,488,442 bytes and plays; browser media state showed a 73.535-second duration and advancing playback time.
+- Recorded-result replay, source evidence, save and reload persistence passed on the public app. No app warnings/errors were found in the collected console log.
+- Latest local layout visually checked in 390px and 320px iframe viewports; `mobile-final.png` records both. `public-release.png` records the deployed desktop workspace.
+- New public comparisons are explicitly unavailable until production identity and durable storage are configured. Optional unconfigured companion controls are hidden.
+- The DEV article is saved as an unpublished draft with devchallenge and hf26challenge tags. Publication and the AI-disclosure choice remain for user review.

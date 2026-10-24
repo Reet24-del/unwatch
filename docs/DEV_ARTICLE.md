@@ -4,6 +4,8 @@ published: false
 tags: devchallenge, hf26challenge
 ---
 
+*This is a submission for the [Hacktoberfest Open-Source AI Challenge Week 3: Slow and Steady](https://dev.to/challenges/hacktoberfest-week3-2026-10-19).*
+
 ## What I Built
 
 You finish a tutorial, understand most of it, and open another one for a better explanation. Ten minutes later, you're still watching the introduction you already know.

@@ -27,6 +27,6 @@
 
 1. Atlas/Auth0 credentials and production callback/origin settings, then live hosted login, persistence and user-isolation verification.
 2. A live rerun of long-course recovery and additional independent topic groups. The local reservation ledger is near its limit; it has not been reset.
-3. The final deployed smoke check after the newest replay/video release.
-4. User review and publication of the DEV article through the official submission template. Nothing has been submitted.
+3. Final user review and AI disclosure for the saved DEV draft. The deployed replay/evidence/save/reload checks passed; the public walkthrough played and reported a 73.535-second duration.
+4. Publication of the DEV article through the official submission template. It is saved as an unpublished draft under Reet Singh; nothing has been submitted.
 5. Optional partner paths need their own live evidence before those categories are added. Backboard memory deletion controls remain a wider-launch follow-up.
