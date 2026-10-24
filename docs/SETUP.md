@@ -52,7 +52,7 @@ Create a Developer-plan project and set the server-only `SENTRY_DSN`. The app us
 
 `render.yaml` configures one free Node web service. Connect a repository containing this code using Render's dashboard/blueprint workflow. Build command: `npm ci --include=dev && npm run build`. The explicit include is required because the production environment otherwise omits TypeScript and Vite. Start command: `npm start` with `NODE_ENV=production`. Health path: `/api/health`. Use Node 22.22 or newer.
 
-Set `APP_ORIGIN` to the exact public HTTPS URL, configure MongoDB/Auth0 first, then add server-side provider secrets. Free services sleep after inactivity and have ephemeral disk. Do not rely on local file storage or an always-on worker. Use the default Render domain; a paid domain is unnecessary.
+Set `APP_ORIGIN` on Render to `https://unwatch-byeb.onrender.com`, configure MongoDB/Auth0 first, then add server-side provider secrets. Add that same origin to Auth0 callback/logout/web-origin settings. Keep local `.env` origins pointed at localhost for local development. Before public live mode, preserve existing budget reservations when moving to MongoDB or reconcile allowance against the provider dashboard; a new database must not silently reset the same keys’ spending limits. Free services sleep after inactivity and have ephemeral disk. Do not rely on local file storage or an always-on worker. Use the default Render domain; a paid domain is unnecessary.
 
 Verify health, login, same-origin API, real captions, playback, persistence after restart and quota behavior. Keep live mode false if any required account remains unconfigured.
 

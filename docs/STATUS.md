@@ -19,7 +19,7 @@
 - 18 automated tests and the production build pass.
 - Five short-video comparison configurations completed after the detail guard. The one proposed skip was reviewed at caption level. Reversed pairs are included, so this is not five independent topics or a held-out benchmark.
 - A previous real ElevenLabs source-URL transcription supplied the captionless Docker cache. Long-course comparisons worked before the latest recovery change; a later malformed result led to the tested recovery path.
-- Real embedded playback, selected timestamp, Next section, pause, full-video selection and source URL checked in the browser.
+- Real embedded playback, selected timestamp, Next section, pause, full-video selection and source URL checked in the browser. The public player also automatically advanced across the omitted interval to its second selected range at 02:04.
 - Latest local interface inspected at 390px and 320px; console warning/error collection was empty. Screenshot: `design/mobile-final.png`.
 - Git uses the owner's private noreply address. `.env`, `.data`, `.qa`, dependencies and build output are ignored. A pre-publication scan found no configured provider secrets in staged files.
 
@@ -27,6 +27,6 @@
 
 1. Atlas/Auth0 credentials and production callback/origin settings, then live hosted login, persistence and user-isolation verification.
 2. A live rerun of long-course recovery and additional independent topic groups. The local reservation ledger is near its limit; it has not been reset.
-3. Final user review and AI disclosure for the saved DEV draft. The deployed replay/evidence/save/reload checks passed; the public walkthrough played and reported a 73.535-second duration.
+3. Final user review of the saved DEV draft. The user-approved AI-assisted disclosure is saved. The deployed replay/evidence/save/reload checks passed; the public walkthrough played and reported a 73.535-second duration.
 4. Publication of the DEV article through the official submission template. It is saved as an unpublished draft under Reet Singh; nothing has been submitted.
 5. Optional partner paths need their own live evidence before those categories are added. Backboard memory deletion controls remain a wider-launch follow-up.

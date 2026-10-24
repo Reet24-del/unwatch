@@ -65,3 +65,6 @@ Post-polish checks: selection changed 18/32 to 30/20 then reset; save/reopen and
 - Latest local layout visually checked in 390px and 320px iframe viewports; `mobile-final.png` records both. `public-release.png` records the deployed desktop workspace.
 - New public comparisons are explicitly unavailable until production identity and durable storage are configured. Optional unconfigured companion controls are hidden.
 - The DEV article is saved as an unpublished draft with devchallenge and hf26challenge tags. Publication and the AI-disclosure choice remain for user review.
+
+- Production YouTube iframe loaded with the correct HTTPS origin, played and automatically advanced from the first selected interval to the next at start=124 seconds. This verifies the actual skip boundary on the deployed app.
+- The private DEV draft was saved with the user-approved AI-assisted disclosure; its preview token is not stored in the repository.
