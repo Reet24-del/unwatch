@@ -21,9 +21,9 @@ export function Library({
         <div className="empty-state">
           <img
             className="empty-illustration"
-            src="/images/learning-ribbon.webp"
-            width="800"
-            height="800"
+            src="/images/learning-sparks.webp"
+            width="1600"
+            height="720"
             alt=""
           />
           <h2>A little less to rewatch.</h2>

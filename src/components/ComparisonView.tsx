@@ -1,5 +1,6 @@
 import {
   ArrowRight,
+  ArrowUpRight,
   BookmarkPlus,
   Check,
   ChevronDown,
@@ -47,104 +48,108 @@ export function ComparisonView({
   const d = durations(comparison, selected);
   return (
     <section className="comparison" aria-label="Tutorial comparison">
-      <div className="comparison-heading">
-        <div>
-          <p className="comparison-label">
-            {comparison.demo
-              ? 'EXAMPLE COMPARISON'
-              : comparison.recorded
-                ? 'RECORDED LIVE RESULT'
-                : 'YOUR COMPARISON'}{' '}
-            <span>
-              ·{' '}
+      <div className="comparison-overview">
+        <div className="comparison-heading">
+          <div>
+            <p className="comparison-label">
               {comparison.demo
-                ? 'Illustrative data'
-                : Object.values(comparison.videos).some(
-                      (video) => video.transcriptSource === 'elevenlabs',
-                    )
-                  ? 'Based on captions and AI transcripts'
-                  : 'Based on available captions'}
-            </span>
+                ? 'EXAMPLE COMPARISON'
+                : comparison.recorded
+                  ? 'RECORDED LIVE RESULT'
+                  : 'YOUR COMPARISON'}{' '}
+              <span>
+                ·{' '}
+                {comparison.demo
+                  ? 'Illustrative data'
+                  : Object.values(comparison.videos).some(
+                        (video) => video.transcriptSource === 'elevenlabs',
+                      )
+                    ? 'Based on captions and AI transcripts'
+                    : 'Based on available captions'}
+              </span>
+            </p>
+            <h2>{comparison.title}</h2>
+          </div>
+          <div className="time-summary">
+            <div>
+              <strong>
+                <AnimatedNumber value={Math.round(d.watch / 60)} /> <small>min</small>
+              </strong>
+              <span>to watch</span>
+            </div>
+            <div>
+              <strong>
+                <AnimatedNumber value={Math.round(d.omitted / 60)} /> <small>min</small>
+              </strong>
+              <span>left out</span>
+            </div>
+          </div>
+        </div>
+        {comparison.notices?.map((notice) => (
+          <p className="form-note" role="status" key={notice}>
+            {notice}
           </p>
-          <h2>{comparison.title}</h2>
-        </div>
-        <div className="time-summary">
-          <div>
-            <strong>
-              <AnimatedNumber value={Math.round(d.watch / 60)} /> <small>min</small>
-            </strong>
-            <span>to watch</span>
-          </div>
-          <div>
-            <strong>
-              <AnimatedNumber value={Math.round(d.omitted / 60)} /> <small>min</small>
-            </strong>
-            <span>left out</span>
-          </div>
-        </div>
-      </div>
-      {comparison.notices?.map((notice) => (
-        <p className="form-note" role="status" key={notice}>
-          {notice}
-        </p>
-      ))}
-      <div className="timelines">
-        {(['a', 'b'] as const).map((source) => (
-          <div className="timeline-row" key={source}>
-            <div className="timeline-source">
-              <strong>Tutorial {source.toUpperCase()}</strong>
-              <span title={comparison.videos[source].title}>{comparison.videos[source].title}</span>
-              {comparison.videos[source].transcriptSource === 'elevenlabs' && (
-                <span>AI transcript</span>
-              )}
-              <b>{time(comparison.videos[source].duration)}</b>
-            </div>
-            <div className="timeline-track">
-              <div className="timeline-blocks">
-                {comparison.segments
-                  .filter((s) => s.source === source)
-                  .map((s) => (
-                    <button
-                      key={s.id}
-                      className={`timeline-block ${s.kind}`}
-                      style={{
-                        flexBasis: `${((s.end - s.start) / comparison.videos[source].duration) * 100}%`,
-                      }}
-                      onClick={() => setEvidence(s)}
-                      aria-label={`${s.title}, ${time(s.start)} to ${time(s.end)}. View caption evidence.`}
-                    >
-                      <span>{s.title}</span>
-                    </button>
-                  ))}
-              </div>
-              <div className="timeline-scale">
-                <span>00:00</span>
-                <span>{time(comparison.videos[source].duration / 2)}</span>
-                <span>{time(comparison.videos[source].duration)}</span>
-              </div>
-            </div>
-          </div>
         ))}
-        <div className="timeline-legend">
-          <span>
-            <i className="legend-dot overlap" />
-            Already covered
-          </span>
-          <span>
-            <i className="legend-dot new" />
-            New or useful detail
-          </span>
-          <span>
-            <i className="legend-dot uncertain" />
-            Keep for context
-          </span>
-          <span className="coverage-note">Times reflect transcript coverage</span>
+        <div className="timelines">
+          {(['a', 'b'] as const).map((source) => (
+            <div className="timeline-row" key={source}>
+              <div className="timeline-source">
+                <strong>Tutorial {source.toUpperCase()}</strong>
+                <span title={comparison.videos[source].title}>
+                  {comparison.videos[source].title}
+                </span>
+                {comparison.videos[source].transcriptSource === 'elevenlabs' && (
+                  <span>AI transcript</span>
+                )}
+                <b>{time(comparison.videos[source].duration)}</b>
+              </div>
+              <div className="timeline-track">
+                <div className="timeline-blocks">
+                  {comparison.segments
+                    .filter((s) => s.source === source)
+                    .map((s) => (
+                      <button
+                        key={s.id}
+                        className={`timeline-block ${s.kind}`}
+                        style={{
+                          flexBasis: `${((s.end - s.start) / comparison.videos[source].duration) * 100}%`,
+                        }}
+                        onClick={() => setEvidence(s)}
+                        aria-label={`${s.title}, ${time(s.start)} to ${time(s.end)}. View caption evidence.`}
+                      >
+                        <span>{s.title}</span>
+                      </button>
+                    ))}
+                </div>
+                <div className="timeline-scale">
+                  <span>00:00</span>
+                  <span>{time(comparison.videos[source].duration / 2)}</span>
+                  <span>{time(comparison.videos[source].duration)}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+          <div className="timeline-legend">
+            <span>
+              <i className="legend-dot overlap" />
+              Already covered
+            </span>
+            <span>
+              <i className="legend-dot new" />
+              New or useful detail
+            </span>
+            <span>
+              <i className="legend-dot uncertain" />
+              Keep for context
+            </span>
+            <span className="coverage-note">Times reflect transcript coverage</span>
+          </div>
         </div>
       </div>
       <div className="watchlist-panel">
         <div className="review-callout">
           <div className="review-callout-icon" aria-hidden="true">
-            ↗
+            <ArrowUpRight size={21} />
           </div>
           <div>
             <span className="review-eyebrow">BEFORE YOU PRESS PLAY</span>

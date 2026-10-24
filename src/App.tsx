@@ -201,6 +201,7 @@ export default function App({ config }: { config: AppConfig }) {
               className="auth-button"
               onClick={connection.signedIn ? connection.logout : connection.login}
               disabled={connection.loading}
+              aria-label={connection.signedIn ? 'Sign out' : 'Sign in to connect your learning'}
             >
               {connection.signedIn ? (
                 <>
@@ -208,7 +209,12 @@ export default function App({ config }: { config: AppConfig }) {
                   Sign out
                 </>
               ) : (
-                'Sign in to connect your learning'
+                <>
+                  <span className="auth-label">Sign in to connect your learning</span>
+                  <span className="auth-short" aria-hidden="true">
+                    Sign in
+                  </span>
+                </>
               )}
             </button>
           )}

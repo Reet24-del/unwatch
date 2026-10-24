@@ -8,6 +8,7 @@ export function WorkspaceHero() {
   const rotateY = useSpring(y, { stiffness: 100, damping: 20 });
   return (
     <header className="workspace-hero">
+      <div className="hero-wave-glow" aria-hidden="true" />
       <div className="hero-copy">
         <h1>
           <span>Less replay.</span>
@@ -33,9 +34,9 @@ export function WorkspaceHero() {
         }}
       >
         <m.img
-          src="/images/learning-ribbon.webp"
-          width="800"
-          height="800"
+          src="/images/learning-wave.webp"
+          width="1600"
+          height="720"
           alt=""
           fetchPriority="high"
           decoding="async"
