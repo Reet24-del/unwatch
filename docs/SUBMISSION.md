@@ -11,8 +11,8 @@ Target: [Hacktoberfest Open-Source AI Challenge: Week 3](https://dev.to/challeng
 | P0 | Say plainly when the comparison finds no safe shortcut | Built. The zero-skip state explains that no material was removed. |
 | P0 | Keep an honest, no-key example for judges | Built. It is labeled illustrative; saved screenshot: `docs/design/review-flow.png`. |
 | P0 | Verify a live captionless video and a long-course comparison | Done for specific Docker links. Do not generalize to all YouTube videos. |
-| P1 | Review five diverse live pairs and measure omitted time and false skips | Open. This is the biggest credibility gap in the demo. |
-| P1 | Verify real YouTube embed seeking and the fallback source link | Open. Test on the exact pair used in the demo recording. |
+| P1 | Review real pairs and measure omitted time and false skips | Five short-video configurations completed; see `QUALITY.md` for sample limitations. Additional topic groups and long-course recovery need review. |
+| P1 | Verify real YouTube embed seeking and the fallback source link | Verified on the saved React pair: embed, playback, seeking, pause, full-video mode and correct source URL. |
 | P1 | Publish a public demo and code repository | Open. Public live analysis requires durable MongoDB budgets and Auth0 identity; keep live mode off until those are configured and tested. |
 | P1 | Capture a short, narrated before/after demo | Open. Show the inputs, evidence, a restored skip, actual playback, and a candid failure/zero-skip state. |
 | P2 | Verify optional sponsor paths: MongoDB, Auth0, Backboard, Sentry, Render, Entire | Open. An adapter or blueprint alone does not qualify as a real integration. |
@@ -20,7 +20,7 @@ Target: [Hacktoberfest Open-Source AI Challenge: Week 3](https://dev.to/challeng
 ## Sponsor claims that the current evidence supports
 
 - **Mastra:** a real workflow performs transcript retrieval, model comparison, and validation on the live route. It is the open-source AI framework at the center of the system.
-- **Ultramarine:** real Docker-link comparisons produced structured sections that passed citation validation. Add actual token/cost numbers from a fresh run before claiming its prize category; the official category asks for cost.
+- **Ultramarine:** real Docker-link comparisons produced structured sections that passed citation validation. Fresh token counts and model-cost estimates are recorded in `QUALITY.md`; distinguish them from provider billing.
 - **ElevenLabs:** one captionless Docker video was transcribed via Scribe v2 `source_url`, then compared successfully. Its reliability depends on source accessibility and free account allowance.
 - **SerpApi:** real caption retrieval worked for captioned Docker tutorials and fed the workflow. Its category examples emphasize live search/RAG; transcript retrieval is a real use, but the fit may be less compelling than the three above. Explain the specific API call and why it matters.
 
@@ -44,7 +44,7 @@ The important interaction happens *before* playback. I can open the exact captio
 
 ### Code
 
-**Add before publishing:** public repository URL and a link to `server/workflow.ts`, `shared/domain.ts`, and `server/providers.ts`. The repository should include the setup steps and `.env.example`, never `.env` or stored transcripts.
+**Repository:** https://github.com/Reet24-del/unwatch. Link to `server/workflow.ts`, `shared/domain.ts`, and `server/providers.ts`. The repository should include the setup steps and `.env.example`, never `.env` or stored transcripts.
 
 ### How I Built It
 
@@ -70,7 +70,7 @@ Candidate categories after final evidence check: Best Use of Mastra, Best Use of
 
 ## Final submission checklist
 
-1. Confirm eligibility and DEV account access in the [official rules](https://dev.to/page/hacktoberfest-week3-2026-10-19-contest-rules). The project and its repository must be started and completed in the challenge window; note any later commits in the README. A local Git repository has been initialized, but it has no commit or remote yet.
+1. Confirm eligibility and DEV account access in the [official rules](https://dev.to/page/hacktoberfest-week3-2026-10-19-contest-rules). The project and its repository must be started and completed in the challenge window; note any later commits in the README. The project is committed and public at https://github.com/Reet24-del/unwatch.
 2. Make the repository public with no secrets or local cache. Add a short license/credits section and a link to the live demo or video.
 3. Run the five-pair quality table: two similar tutorials, largely unrelated tutorials, captionless speech, a visually dependent demo, and a long/short pair. Record video IDs, caption source, selected/omitted minutes, every proposed skip's correctness, and provider cost. Publish the actual sample size.
 4. Test playback, seek, pause, full-video link, saved-session reopen, and narrow-screen layout on the final deploy/demo pair. Keep the zero-skip state in the recording or article.

@@ -5,8 +5,16 @@
 - Added a pre-watch review callout that explains exactly what is excluded, including an honest zero-skip state. All / Left out / Included filters make long watchlists easier to inspect without changing selections.
 - Verified the review flow in the browser with the illustrative React example: three excluded sections, evidence dialog, and a saved screenshot at `docs/design/review-flow.png`.
 - Created `docs/SUBMISSION.md` with prioritized suggestions, a DEV article draft, sponsor evidence boundaries, and a final checklist.
-- Initialized a local Git repository for the challenge window. It has no commit or public remote yet; `.env`, `.data`, `dist`, and `node_modules` are ignored.
-- Current suite: 16 passing tests; TypeScript and production build pass. The initial sandbox test run could not bind a loopback port; rerunning with local socket permission passed.
+- Initialized a local Git repository for the challenge window. It is committed and public at https://github.com/Reet24-del/unwatch; `.env`, `.data`, `dist`, and `node_modules` are ignored.
+- Current suite: 18 passing tests; TypeScript and production build pass. The initial sandbox test run could not bind a loopback port; rerunning with local socket permission passed.
+
+## Final evaluation and repository
+
+- Five current short-video comparison configurations completed with real cached captions; only one skip was proposed and caption-reviewed. The sample includes reversed pairs, not five independent topics. See `QUALITY.md`.
+- Added an explicit distinct-detail assessment after finding a mixed-content false skip, plus regression coverage.
+- Added conservative recovery for malformed long-video parts and a visible partial-analysis notice. Incomplete model usage does not produce an understated cost estimate. This recovery is regression tested; its live long-course rerun awaits sufficient allowance.
+- Verified actual embedded React video playback, selected timestamp seeking, pause and full-video control in the browser.
+- Public code: https://github.com/Reet24-del/unwatch. Article draft: `DEV_ARTICLE.md`; ordered tracker: `TODO.md`.
 
 ## Later live-integration work
 

@@ -11,7 +11,7 @@ Updated 24 October 2026. Work proceeds in the order below. No secrets belong in 
 7. [ ] Complete the final mobile and console regression on the final deployed version. Earlier mobile checks passed; the new partial-analysis notice uses the existing responsive notice style.
 8. [x] Run automated tests and production compilation: 18 tests pass.
 9. [x] Initialize Git and verify `.env`, `.data`, build output, dependencies and private QA data are ignored.
-10. [ ] Commit and publish code under **Reet24-del**, the owner selected by the user. The local CLI login was expired and the connector was a different account; wait for the correct account connection. Do not publish under the other account.
+10. [x] Commit and publish code under **Reet24-del**, the owner selected by the user: https://github.com/Reet24-del/unwatch. Network-enabled CLI verification succeeded; a private noreply commit address was used.
 11. [ ] Deploy the public example on the free Render service, then verify its health and browser flow. A fully live public service additionally needs verified Atlas and Auth0 configuration. A public example plus a recorded local live demo is a valid fallback for demonstration.
 12. [x] Prepare a demo script and accurate article content using measured results and proven integrations.
 13. [ ] Record/export the demo and insert its URL and repository/demo URLs in the article. Capture real UI and clearly label illustrative content.

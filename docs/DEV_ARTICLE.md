@@ -28,7 +28,7 @@ Four other comparison configurations kept everything. That includes an unrelated
 ## Code
 
 <!-- Replace this link before publication. -->
-[Source code and setup](PUBLIC_REPOSITORY_URL)
+[Source code and setup](https://github.com/Reet24-del/unwatch)
 
 The project uses React, TypeScript, Express, and shared validation schemas. The workflow lives in `server/workflow.ts`, provider adapters in `server/providers.ts`, and section validation and playback ranges in `shared/domain.ts`. The repository includes an MIT license, setup instructions, application budget controls, and known limitations.
 
