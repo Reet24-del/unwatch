@@ -43,6 +43,7 @@ export const comparisonSchema = z.object({
   createdAt: z.string(),
   mode: modeSchema,
   demo: z.boolean(),
+  recorded: z.boolean().optional(),
   videos: z.object({ a: videoSchema, b: videoSchema }),
   segments: z.array(segmentSchema).min(1).max(250),
   notices: z.array(z.string().max(300)).max(8).optional(),
@@ -233,7 +234,10 @@ export function materializeSections(
       let reason = section.reason;
       if (
         kind === 'overlap' &&
-        (evidence.length < 2 || section.confidence !== 'high' || captionGap || section.addsDistinctDetail !== false)
+        (evidence.length < 2 ||
+          section.confidence !== 'high' ||
+          captionGap ||
+          section.addsDistinctDetail !== false)
       ) {
         kind = 'uncertain';
         reason =
@@ -277,13 +281,17 @@ export function materializeConservatively(
         .sort((a, b) => a.startIndex - b.startIndex)) {
         const { startIndex, endIndex } = section;
         if (
-          startIndex <= previousIndex || endIndex < startIndex || endIndex >= snippets.length ||
+          startIndex <= previousIndex ||
+          endIndex < startIndex ||
+          endIndex >= snippets.length ||
           snippets[startIndex].start < 0 ||
           snippets[endIndex].end <= snippets[startIndex].start ||
           snippets[endIndex].end > videos[source].duration
-        ) continue;
+        )
+          continue;
         const matchValid =
-          section.matchStartIndex != null && section.matchEndIndex != null &&
+          section.matchStartIndex != null &&
+          section.matchEndIndex != null &&
           section.matchStartIndex <= section.matchEndIndex &&
           section.matchEndIndex < videos.a.snippets.length;
         sections.push({
@@ -308,7 +316,8 @@ export function materializeConservatively(
           endIndex: snippets.length - 1,
           kind: source === 'a' ? 'baseline' : 'uncertain',
           confidence: 'low',
-          reason: 'The suggested section references could not be verified, so this video is kept in full.',
+          reason:
+            'The suggested section references could not be verified, so this video is kept in full.',
           matchStartIndex: null,
           matchEndIndex: null,
         });

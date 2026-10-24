@@ -1,0 +1,396 @@
+{
+  "id": "e9f65374-2b12-47bc-a07f-6b791bccc9ae",
+  "title": "useState Tutorial Comparison: Web Dev Simplified vs Future Dimensions 360",
+  "createdAt": "2026-10-24T10:19:49.770Z",
+  "mode": "new",
+  "demo": false,
+  "videos": {
+    "a": {
+      "id": "O6P86uwfdR0",
+      "title": "Learn useState In 15 Minutes - React Hooks Explained",
+      "language": "en",
+      "duration": 946.43,
+      "snippets": [
+        {
+          "start": 0,
+          "end": 3.27,
+          "text": "I love react hooks but"
+        }
+      ]
+    },
+    "b": {
+      "id": "3AIS-okLSUw",
+      "title": "Master React useState in 10 Minutes!",
+      "language": "en",
+      "duration": 596.519,
+      "snippets": [
+        {
+          "start": 3.199,
+          "end": 4.759,
+          "text": "hi guys Welcome Back to"
+        }
+      ]
+    }
+  },
+  "segments": [
+    {
+      "id": "a-0-14",
+      "source": "a",
+      "title": "Intro: series plan and useState",
+      "start": 0,
+      "end": 31.05,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "Source A intro covering the series scope and importance of useState.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-15-21",
+      "source": "a",
+      "title": "Channel intro and subscription pitch",
+      "start": 31.05,
+      "end": 49.469,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "Branding and subscribe call to action.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-22-48",
+      "source": "a",
+      "title": "Project setup with create-react-app",
+      "start": 49.469,
+      "end": 106.95,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "Setup steps, boilerplate cleanup, and counter app layout.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-49-55",
+      "source": "a",
+      "title": "Importing useState from React",
+      "start": 106.95,
+      "end": 121.95,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "Import syntax via destructuring.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-56-68",
+      "source": "a",
+      "title": "Hook gotchas overview and skip ahead",
+      "start": 121.95,
+      "end": 147.27,
+      "kind": "baseline",
+      "confidence": "medium",
+      "reason": "Frames the hook rules section and offers a skip-ahead point.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-69-82",
+      "source": "a",
+      "title": "Hooks only in function components",
+      "start": 147.27,
+      "end": 177.81,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "Rule with class-component counterexample.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-83-118",
+      "source": "a",
+      "title": "Hooks must run in same order",
+      "start": 177.81,
+      "end": 254.67,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "Order rule, prohibited locations, and the if-check error demonstration.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-119-124",
+      "source": "a",
+      "title": "Confirming error goes away",
+      "start": 254.67,
+      "end": 265.16,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "Wraps up the hooks-rules demonstration.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-125-143",
+      "source": "a",
+      "title": "useState call and default state value",
+      "start": 265.16,
+      "end": 305.15,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "Explains calling useState with a default value and the returned array.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-144-165",
+      "source": "a",
+      "title": "State value and setter naming",
+      "start": 305.15,
+      "end": 348.86,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "Destructured pair, arbitrary naming, and rendering the default value.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-166-188",
+      "source": "a",
+      "title": "Decrement handler with setCount",
+      "start": 348.86,
+      "end": 397.729,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "First setter usage and re-render behavior compared to class setState.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-189-235",
+      "source": "a",
+      "title": "Function form using previous state",
+      "start": 397.729,
+      "end": 498.41,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "Stale-state bug explained and previous-value function form demonstrated.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-236-250",
+      "source": "a",
+      "title": "Increment handler",
+      "start": 498.41,
+      "end": 531.89,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "Adds plus button mirroring the decrement logic.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-251-280",
+      "source": "a",
+      "title": "Initial state runs every render",
+      "start": 531.89,
+      "end": 594.68,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "Performance problem of computing default state on every render; lazy init solution.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-281-317",
+      "source": "a",
+      "title": "Lazy initialization demonstration",
+      "start": 594.68,
+      "end": 675.35,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "Console.log demo proving when initializer functions run.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-318-390",
+      "source": "a",
+      "title": "Object state does not auto-merge",
+      "start": 675.35,
+      "end": 829.55,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "Object state pitfall demonstrated: setState replaces instead of merging.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-391-421",
+      "source": "a",
+      "title": "Prefer multiple useState hooks",
+      "start": 829.55,
+      "end": 900.23,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "Multiple hooks as the recommended pattern and benefit.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-422-435",
+      "source": "a",
+      "title": "SetTheme on plus button example",
+      "start": 900.23,
+      "end": 929.24,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "Example showing independent state updates.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "a-436-444",
+      "source": "a",
+      "title": "Outro and resource links",
+      "start": 929.24,
+      "end": 946.43,
+      "kind": "baseline",
+      "confidence": "high",
+      "reason": "Course and blog links plus thanks.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "b-gap-19",
+      "source": "b",
+      "title": "Keep for context",
+      "start": 0,
+      "end": 3.199,
+      "kind": "uncertain",
+      "confidence": "low",
+      "reason": "This interval is not fully assessed from captions. Kept so visual context is not lost.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "b-0-24",
+      "source": "b",
+      "title": "Intro and prior tutorial context",
+      "start": 3.199,
+      "end": 63.199,
+      "kind": "uncertain",
+      "confidence": "high",
+      "reason": "Context, motivation for state vs plain variables; unclear how much learner already saw.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "b-25-44",
+      "source": "b",
+      "title": "useState definition, value and setter",
+      "start": 63.199,
+      "end": 126.68,
+      "kind": "overlap",
+      "confidence": "high",
+      "reason": "Equivalent explanation of useState taking initial value and returning value plus setter array.",
+      "evidence": [
+        {
+          "source": "b",
+          "start": 63.199,
+          "end": 126.68,
+          "text": "current value of a state … a function also that will allow you to change the variable value"
+        },
+        {
+          "source": "a",
+          "start": 265.16,
+          "end": 332.63,
+          "text": "current state … a function which is going to allow us to update"
+        }
+      ],
+      "suggested": false
+    },
+    {
+      "id": "b-45-57",
+      "source": "b",
+      "title": "Tutorial plan: color, scale, rotation",
+      "start": 126.68,
+      "end": 159.92,
+      "kind": "example",
+      "confidence": "high",
+      "reason": "Distinct react-three-fiber example plan not present in Source A.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "b-58-80",
+      "source": "b",
+      "title": "Local state per component instance",
+      "start": 159.92,
+      "end": 223.239,
+      "kind": "new",
+      "confidence": "high",
+      "reason": "Key point that state is local per component, shown with separate cube rotation states.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "b-81-109",
+      "source": "b",
+      "title": "Toggling state via updater",
+      "start": 223.239,
+      "end": 298.8,
+      "kind": "example",
+      "confidence": "high",
+      "reason": "Different useful example: flipping boolean state by click, reinforcing per-instance state.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "b-110-161",
+      "source": "b",
+      "title": "Hover color switching example",
+      "start": 298.8,
+      "end": 453,
+      "kind": "example",
+      "confidence": "high",
+      "reason": "Pointer event based state example including hex color explanation, absent from A.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "b-162-191",
+      "source": "b",
+      "title": "Scale state with 3D arrays",
+      "start": 453,
+      "end": 536.92,
+      "kind": "example",
+      "confidence": "high",
+      "reason": "Array state example with mesh scale properties; concept not in A.",
+      "evidence": [],
+      "suggested": true
+    },
+    {
+      "id": "b-192-213",
+      "source": "b",
+      "title": "Summary, pointers, and outro",
+      "start": 536.92,
+      "end": 596.519,
+      "kind": "uncertain",
+      "confidence": "medium",
+      "reason": "Recap plus pointer to separate React series; links and context A does not provide.",
+      "evidence": [],
+      "suggested": true
+    }
+  ],
+  "usage": {
+    "inputTokens": 19563,
+    "outputTokens": 2170,
+    "costUsd": 0.00401945,
+    "cachedTranscripts": 2
+  },
+  "recorded": true,
+  "notices": [
+    "Recorded live analysis from 24 October 2026. Loading this result uses no API credits. Public caption quotes are shortened; open the source videos for full context."
+  ]
+}

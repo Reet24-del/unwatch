@@ -7,12 +7,14 @@ export function ComparisonForm({
   mode,
   setMode,
   error,
+  unavailable = false,
 }: {
   onCompare: (a: string, b: string) => void;
   busy: boolean;
   mode: Mode;
   setMode: (mode: Mode) => void;
   error: string;
+  unavailable?: boolean;
 }) {
   const [a, setA] = useState(''),
     [b, setB] = useState(''),
@@ -22,6 +24,7 @@ export function ComparisonForm({
       className="source-form"
       onSubmit={(e) => {
         e.preventDefault();
+        if (unavailable) return;
         setValidation('');
         try {
           if (youtubeId(a) === youtubeId(b))
@@ -94,7 +97,7 @@ export function ComparisonForm({
             Combine both
           </label>
         </fieldset>
-        <button className="button primary" disabled={busy} type="submit">
+        <button className="button primary" disabled={busy || unavailable} type="submit">
           {busy ? (
             <>
               <LoaderCircle size={18} className="spin" />
@@ -111,6 +114,12 @@ export function ComparisonForm({
       {(validation || error) && (
         <p role="alert" className="form-error">
           {validation || error}
+        </p>
+      )}
+      {unavailable && (
+        <p className="form-note">
+          New comparisons are not available here yet. Choose “Replay a real result” to explore a
+          saved live analysis without credits.
         </p>
       )}
       {busy && (

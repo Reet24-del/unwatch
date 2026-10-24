@@ -17,9 +17,9 @@ The theme is “Slow and Steady.” My version of laziness is spending less ener
 ## Demo
 
 <!-- Replace these two links before publication. -->
-[Try UNWATCH](PUBLIC_DEMO_URL) · [Watch the short walkthrough](DEMO_VIDEO_URL)
+[Try UNWATCH](https://unwatch-byeb.onrender.com) · [Watch the short walkthrough](https://unwatch-byeb.onrender.com/demo/)
 
-The app includes a clearly labeled illustrative example that uses no API credits. The live results below come from real YouTube captions and a real transcription path, rather than that example.
+Choose **Replay a real result** to open the exact measured comparison without spending credits. The public site also includes a clearly labeled illustrative example. The walkthrough uses captured UI states and an offline synthetic narration; it is edited rather than a continuous recording. The live results below come from real YouTube captions and a real transcription path, rather than that example.
 
 In one React comparison, the second tutorial used an interactive 3D scene to teach state. UNWATCH kept those examples and proposed omitting only a repeated explanation of the state value and setter. Its assessed timeline went from **9:56 to 8:57**, with **59.481 seconds** left out after context padding. I checked both cited caption excerpts. I can include the section again with one click.
 
@@ -56,10 +56,11 @@ UNWATCH takes on the comparison work: finding the repeated explanation, showing 
 
 The current pilot is deliberately modest: five configurations, with reversed pairs among them, covering two main topic groups plus an unrelated-topic check. Only one section was proposed for omission. It is enough to demonstrate the workflow, but not enough to claim general accuracy or improved learning. Caption analysis also cannot judge silent demonstrations reliably, so those deserve extra care.
 
-My next improvement would be a broader review set and feedback on which suggested skips people restore. For this prototype, a small, explainable shortcut is more useful than a spectacular number that removes the explanation someone needed.
+My next improvement would be a broader review set and feedback on which suggested skips people restore. For this prototype, I want each suggested shortcut to be explainable and easy to undo.
 
 ## Prize Categories
 
+- **Best Use of Render:** the public React interface and Express API run together on a real free Render web service. The public replay lets judges inspect a saved live result without new inference requests.
 - **Best Use of Mastra:** the actual comparison route executes the open-source workflow for retrieval, comparison and validation.
 - **Best Use of Ultramarine:** it reasons over the real transcripts; the token counts and estimated run costs above show what it did.
 - **Best Use of ElevenLabs:** Scribe transcribed a real captionless Docker source and supplied timed text to the workflow. Later evaluation runs reused that cached transcript.

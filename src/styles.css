@@ -251,6 +251,18 @@ main {
 .topbar button:hover {
   color: var(--ink);
 }
+.topbar .topbar-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px 16px;
+}
+@media (max-width: 680px) {
+  .topbar { flex-wrap: wrap; }
+  .topbar .topbar-actions { margin-left: auto; gap: 6px 12px; }
+  .topbar .topbar-actions button { min-height: 36px; }
+}
 .workspace-heading {
   margin: 6px 0 28px;
 }
@@ -2543,4 +2555,16 @@ input[type='checkbox'] {
   .time-cell {
     font-size: 10px;
   }
+}
+
+@media (max-width: 680px) {
+  .topbar {
+    height: auto;
+    min-height: 76px;
+    padding: 10px 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+  .topbar .topbar-actions { margin-left: 0; justify-content: flex-start; }
 }

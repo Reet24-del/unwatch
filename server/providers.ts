@@ -68,12 +68,17 @@ const transcriptResponse = z.object({
 });
 const scribeResponse = z.object({
   language_code: z.string().optional(),
-  words: z.array(z.object({
-    start: z.number().optional(),
-    end: z.number().optional(),
-    text: z.string(),
-    type: z.string().optional(),
-  })).min(1).max(30000),
+  words: z
+    .array(
+      z.object({
+        start: z.number().optional(),
+        end: z.number().optional(),
+        text: z.string(),
+        type: z.string().optional(),
+      }),
+    )
+    .min(1)
+    .max(30000),
 });
 
 function scribeSnippets(words: z.infer<typeof scribeResponse>['words']) {
@@ -86,10 +91,14 @@ function scribeSnippets(words: z.infer<typeof scribeResponse>['words']) {
     }
     if (word.type && word.type !== 'word') continue;
     if (
-      word.start === undefined || word.end === undefined ||
-      !Number.isFinite(word.start) || !Number.isFinite(word.end) ||
-      word.start < 0 || word.end <= word.start
-    ) continue;
+      word.start === undefined ||
+      word.end === undefined ||
+      !Number.isFinite(word.start) ||
+      !Number.isFinite(word.end) ||
+      word.start < 0 ||
+      word.end <= word.start
+    )
+      continue;
     if (current && (word.start - current.start >= 20 || current.text.length >= 500)) {
       if (current.text.trim()) snippets.push({ ...current, text: current.text.trim() });
       current = null;
@@ -137,7 +146,8 @@ async function transcribeWithElevenLabs(id: string, store: Store, cacheKey: stri
         'SerpApi found no captions, and ElevenLabs returned no usable speech for this video.',
       );
     if (
-      duration > 10800 || snippets.length > 12000 ||
+      duration > 10800 ||
+      snippets.length > 12000 ||
       Buffer.byteLength(snippets.map((s) => s.text).join(' '), 'utf8') > 400000
     )
       throw new AppError(
@@ -207,7 +217,12 @@ export async function fetchTranscript(
         'PROVIDER_ERROR',
         'SerpApi returned an unreadable caption response. Please retry later.',
       );
-    if (parsed.data.error && !/no (results?|transcripts?|captions?)|hasn.t returned any results|unavailable/i.test(parsed.data.error))
+    if (
+      parsed.data.error &&
+      !/no (results?|transcripts?|captions?)|hasn.t returned any results|unavailable/i.test(
+        parsed.data.error,
+      )
+    )
       throw new AppError(
         502,
         'PROVIDER_ERROR',
@@ -270,10 +285,7 @@ function analysisChunks(video: Video): Video[] {
   for (let i = 0; i < video.snippets.length; i++) {
     const cue = video.snippets[i];
     const cueBytes = Buffer.byteLength(cue.text, 'utf8');
-    if (
-      i > start &&
-      (cue.end - video.snippets[start].start > 2400 || bytes + cueBytes > 75000)
-    ) {
+    if (i > start && (cue.end - video.snippets[start].start > 2400 || bytes + cueBytes > 75000)) {
       const snippets = video.snippets.slice(start, i);
       chunks.push({ ...video, duration: snippets.at(-1)!.end, snippets });
       start = i;
@@ -293,31 +305,48 @@ function mergeChunkTimeline(
   duration: number,
 ): Comparison['segments'] {
   const sections: Comparison['segments'] = [];
-  const candidates = parts.flatMap((part, i) => {
-    const start = chunks[i].snippets[0].start;
-    const end = chunks[i].duration;
-    return part.segments
-      .filter((section) => section.source === source && section.start >= start - 0.01 && section.end <= end + 0.01)
-      .map((section) => ({ ...section, id: `${source}-part-${i}-${section.id}` }));
-  }).sort((a, b) => a.start - b.start);
+  const candidates = parts
+    .flatMap((part, i) => {
+      const start = chunks[i].snippets[0].start;
+      const end = chunks[i].duration;
+      return part.segments
+        .filter(
+          (section) =>
+            section.source === source && section.start >= start - 0.01 && section.end <= end + 0.01,
+        )
+        .map((section) => ({ ...section, id: `${source}-part-${i}-${section.id}` }));
+    })
+    .sort((a, b) => a.start - b.start);
   let cursor = 0;
   for (const section of candidates) {
     if (section.start > cursor + 0.01)
       sections.push({
-        id: `${source}-context-${sections.length}`, source, title: 'Keep for context',
-        start: cursor, end: section.start, kind: 'uncertain', confidence: 'low',
+        id: `${source}-context-${sections.length}`,
+        source,
+        title: 'Keep for context',
+        start: cursor,
+        end: section.start,
+        kind: 'uncertain',
+        confidence: 'low',
         reason: 'This interval was not fully assessed from the transcript.',
-        evidence: [], suggested: true,
+        evidence: [],
+        suggested: true,
       });
     sections.push(section);
     cursor = Math.max(cursor, section.end);
   }
   if (cursor < duration - 0.01)
     sections.push({
-      id: `${source}-context-${sections.length}`, source, title: 'Keep for context',
-      start: cursor, end: duration, kind: 'uncertain', confidence: 'low',
+      id: `${source}-context-${sections.length}`,
+      source,
+      title: 'Keep for context',
+      start: cursor,
+      end: duration,
+      kind: 'uncertain',
+      confidence: 'low',
       reason: 'This interval was not fully assessed from the transcript.',
-      evidence: [], suggested: true,
+      evidence: [],
+      suggested: true,
     });
   return sections;
 }
@@ -334,22 +363,41 @@ function summedUsage(parts: Comparison[], cachedTranscripts: number) {
 
 /** A malformed model response must not discard valid parts of a long tutorial. */
 async function analyzePart(
-  videos: { a: Video; b: Video }, mode: Mode, cachedTranscripts: number, store: Store,
+  videos: { a: Video; b: Video },
+  mode: Mode,
+  cachedTranscripts: number,
+  store: Store,
 ): Promise<Comparison> {
   try {
     return await analyze(videos, mode, cachedTranscripts, store);
   } catch (error) {
-    if (!(error instanceof AppError) || !['INVALID_ANALYSIS', 'INVALID_EVIDENCE', 'INCOMPLETE_ANALYSIS'].includes(error.code)) throw error;
+    if (
+      !(error instanceof AppError) ||
+      !['INVALID_ANALYSIS', 'INVALID_EVIDENCE', 'INCOMPLETE_ANALYSIS'].includes(error.code)
+    )
+      throw error;
     return {
-      id: randomUUID(), title: 'Tutorial review with unassessed sections',
-      createdAt: new Date().toISOString(), mode, demo: false, videos,
-      notices: ['Some parts could not be assessed and remain included. The reported model cost is unavailable for this partial analysis.'],
+      id: randomUUID(),
+      title: 'Tutorial review with unassessed sections',
+      createdAt: new Date().toISOString(),
+      mode,
+      demo: false,
+      videos,
+      notices: [
+        'Some parts could not be assessed and remain included. The reported model cost is unavailable for this partial analysis.',
+      ],
       segments: (['a', 'b'] as const).map((source) => ({
-        id: `${source}-unassessed`, source, title: source === 'a' ? 'First tutorial context' : 'Keep this unassessed part',
-        start: videos[source].snippets[0].start, end: videos[source].duration,
-        kind: source === 'a' ? 'baseline' : 'uncertain', confidence: 'low',
-        reason: 'The model response for this part could not be validated. This entire part stays included; no equivalence is claimed.',
-        evidence: [], suggested: true,
+        id: `${source}-unassessed`,
+        source,
+        title: source === 'a' ? 'First tutorial context' : 'Keep this unassessed part',
+        start: videos[source].snippets[0].start,
+        end: videos[source].duration,
+        kind: source === 'a' ? 'baseline' : 'uncertain',
+        confidence: 'low',
+        reason:
+          'The model response for this part could not be validated. This entire part stays included; no equivalence is claimed.',
+        evidence: [],
+        suggested: true,
       })),
     };
   }
@@ -369,12 +417,18 @@ async function analyzeLong(
     );
   const chunks = analysisChunks(videos.b);
   if (chunks.length > 8)
-    throw new AppError(422, 'VIDEO_TOO_LONG', 'This tutorial needs more than eight analysis passes. Choose a shorter one.');
+    throw new AppError(
+      422,
+      'VIDEO_TOO_LONG',
+      'This tutorial needs more than eight analysis passes. Choose a shorter one.',
+    );
   const parts: Comparison[] = [];
   // Two concurrent requests keep the whole run bounded without a burst of model calls.
   for (let i = 0; i < chunks.length; i += 2) {
     const batch = await Promise.all(
-      chunks.slice(i, i + 2).map((b) => analyzePart({ a: videos.a, b }, mode, cachedTranscripts, store)),
+      chunks
+        .slice(i, i + 2)
+        .map((b) => analyzePart({ a: videos.a, b }, mode, cachedTranscripts, store)),
     );
     parts.push(...batch);
   }
@@ -383,7 +437,11 @@ async function analyzeLong(
     ...mergeChunkTimeline(parts, chunks, 'b', videos.b.duration),
   ];
   return comparisonSchema.parse({
-    ...parts[0], id: randomUUID(), createdAt: new Date().toISOString(), videos, segments,
+    ...parts[0],
+    id: randomUUID(),
+    createdAt: new Date().toISOString(),
+    videos,
+    segments,
     notices: [...new Set(parts.flatMap((part) => part.notices || []))],
     usage: summedUsage(parts, cachedTranscripts),
   });
@@ -397,29 +455,48 @@ async function analyzeLongFirst(
 ): Promise<Comparison> {
   const chunks = analysisChunks(videos.a);
   if (chunks.length > 8)
-    throw new AppError(422, 'VIDEO_TOO_LONG', 'This tutorial needs more than eight analysis passes. Choose a shorter one.');
+    throw new AppError(
+      422,
+      'VIDEO_TOO_LONG',
+      'This tutorial needs more than eight analysis passes. Choose a shorter one.',
+    );
   const parts: Comparison[] = [];
   for (let i = 0; i < chunks.length; i += 2) {
     const batch = await Promise.all(
-      chunks.slice(i, i + 2).map((a) => analyzePart({ a, b: videos.b }, mode, cachedTranscripts, store)),
+      chunks
+        .slice(i, i + 2)
+        .map((a) => analyzePart({ a, b: videos.b }, mode, cachedTranscripts, store)),
     );
     parts.push(...batch);
   }
-  const laterMatches = parts.slice(1).flatMap((part) =>
-    part.segments.filter((section) =>
-      section.source === 'b' && section.kind === 'overlap' &&
-      section.confidence === 'high' && section.evidence.length === 2 && !section.suggested,
-    ),
-  );
-  const bSections = parts[0].segments.filter((section) => section.source === 'b').map((section) => {
-    if (!section.suggested) return section;
-    const match = laterMatches.find((candidate) =>
-      Math.abs(candidate.start - section.start) < 1 && Math.abs(candidate.end - section.end) < 1,
+  const laterMatches = parts
+    .slice(1)
+    .flatMap((part) =>
+      part.segments.filter(
+        (section) =>
+          section.source === 'b' &&
+          section.kind === 'overlap' &&
+          section.confidence === 'high' &&
+          section.evidence.length === 2 &&
+          !section.suggested,
+      ),
     );
-    return match ? { ...match, id: section.id } : section;
-  });
+  const bSections = parts[0].segments
+    .filter((section) => section.source === 'b')
+    .map((section) => {
+      if (!section.suggested) return section;
+      const match = laterMatches.find(
+        (candidate) =>
+          Math.abs(candidate.start - section.start) < 1 &&
+          Math.abs(candidate.end - section.end) < 1,
+      );
+      return match ? { ...match, id: section.id } : section;
+    });
   return comparisonSchema.parse({
-    ...parts[0], id: randomUUID(), createdAt: new Date().toISOString(), videos,
+    ...parts[0],
+    id: randomUUID(),
+    createdAt: new Date().toISOString(),
+    videos,
     notices: [...new Set(parts.flatMap((part) => part.notices || []))],
     segments: [...mergeChunkTimeline(parts, chunks, 'a', videos.a.duration), ...bSections],
     usage: summedUsage(parts, cachedTranscripts),
@@ -437,10 +514,13 @@ export async function analyze(
   const aLong = videos.a.duration - videos.a.snippets[0].start > 3600 || aBytes > 90000;
   const bLong = videos.b.duration - videos.b.snippets[0].start > 3600 || bBytes > 90000;
   if (aLong && bLong)
-    throw new AppError(422, 'CAPTIONS_TOO_DENSE', 'Both tutorials are too large for a safe comparison in this prototype. Choose a shorter video for one side.');
+    throw new AppError(
+      422,
+      'CAPTIONS_TOO_DENSE',
+      'Both tutorials are too large for a safe comparison in this prototype. Choose a shorter video for one side.',
+    );
   if (aLong) return analyzeLongFirst(videos, mode, cachedTranscripts, store);
-  if (bLong)
-    return analyzeLong(videos, mode, cachedTranscripts, store);
+  if (bLong) return analyzeLong(videos, mode, cachedTranscripts, store);
   const captions = Object.fromEntries(
     Object.entries(videos).map(([key, v]) => [
       key,

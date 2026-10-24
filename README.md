@@ -2,6 +2,10 @@
 
 **Your learning, minus the replay.** Compare two YouTube tutorials, review what the second adds, and watch an editable selection of original sections.
 
+[Public demo](https://unwatch-byeb.onrender.com) · [Source](https://github.com/Reet24-del/unwatch) · [73-second walkthrough](https://unwatch-byeb.onrender.com/demo/)
+
+The public preview provides an illustrative example and a labeled replay of one real analysis without API credits. New public analyses remain disabled until production accounts are configured. Render's free service may take a moment to wake up.
+
 ## Run locally
 
 Requires Node 22.22+ (Node 22.13 was used for the initial local checks; a transitive SDK dependency recommends 22.22+).
@@ -24,7 +28,7 @@ Production:
 NODE_ENV=production npm start
 ```
 
-The production server serves `dist/` and `/api` from one origin. Build first. The repository contains a Render free-service blueprint; no deployment has been performed.
+The production server serves `dist/` and `/api` from one origin. Build first. The repository contains a Render free-service blueprint; the public preview is deployed on Render's free plan.
 
 ## Documents
 
@@ -58,7 +62,7 @@ Backboard requires an explicit model selection and has a separate 20-question ca
 
 ## What is not verified yet
 
-The ElevenLabs fallback has passed both mocked tests and one real source-URL transcription of a captionless Docker tutorial. This verifies a specific video pair, not broad reliability across YouTube. The five-pair quality evaluation, login, cloud persistence and Backboard memory behavior still require live verification. Render is not deployed; Entire is not installed/capturing sessions in this workspace. These must be completed before claiming the corresponding sponsor integration in a submission.
+The ElevenLabs fallback has passed both mocked tests and one real source-URL transcription of a captionless Docker tutorial. This verifies a specific video pair, not broad reliability across YouTube. A broader evaluation across independent topic groups, login, cloud persistence and Backboard memory behavior still require verification. Five short-video configurations are documented in `docs/QUALITY.md`. Render is not deployed; Entire is not installed/capturing sessions in this workspace. These must be completed before claiming the corresponding sponsor integration in a submission.
 
 ## Limitations
 

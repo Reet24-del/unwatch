@@ -14,8 +14,7 @@ test('retrieves once and serves the same transcript from cache', async () => {
   let calls = 0;
   globalThis.fetch = async (url) => {
     calls++;
-    if (String(url).includes('/oembed'))
-      return Response.json({ title: 'A real tutorial title' });
+    if (String(url).includes('/oembed')) return Response.json({ title: 'A real tutorial title' });
     return Response.json({
       transcript: [{ start_ms: 0, end_ms: 10000, snippet: 'Example captions.' }],
     });
@@ -161,29 +160,69 @@ test('analyzes a long second tutorial in bounded chunks without dropping its tim
     const captions = JSON.parse(request.messages[1].content);
     assert.equal(captions.b.captions.length, 1);
     return Response.json({
-      choices: [{ finish_reason: 'stop', message: { content: JSON.stringify({
-        title: 'Docker lessons',
-        sections: [
-          { source: 'a', title: 'Base', startIndex: 0, endIndex: 0, kind: 'baseline', confidence: 'high', reason: 'Foundation.' },
-          { source: 'b', title: 'Next lesson', startIndex: 0, endIndex: 0, kind: 'new', confidence: 'high', reason: 'Distinct content.' },
-        ],
-      }) } }],
+      choices: [
+        {
+          finish_reason: 'stop',
+          message: {
+            content: JSON.stringify({
+              title: 'Docker lessons',
+              sections: [
+                {
+                  source: 'a',
+                  title: 'Base',
+                  startIndex: 0,
+                  endIndex: 0,
+                  kind: 'baseline',
+                  confidence: 'high',
+                  reason: 'Foundation.',
+                },
+                {
+                  source: 'b',
+                  title: 'Next lesson',
+                  startIndex: 0,
+                  endIndex: 0,
+                  kind: 'new',
+                  confidence: 'high',
+                  reason: 'Distinct content.',
+                },
+              ],
+            }),
+          },
+        },
+      ],
       usage: { prompt_tokens: 100, completion_tokens: 50 },
     });
   };
   try {
-    const a = { id: 'dQw4w9WgXcQ', title: 'A', language: 'en', duration: 30, snippets: [{ start: 0, end: 30, text: 'Docker basics' }] };
-    const b = { id: 'M7lc1UVf-VE', title: 'B', language: 'en', duration: 5400, snippets: [
-      { start: 0, end: 1800, text: 'First lesson' },
-      { start: 1800, end: 3600, text: 'Second lesson' },
-      { start: 3600, end: 5400, text: 'Third lesson' },
-    ] };
+    const a = {
+      id: 'dQw4w9WgXcQ',
+      title: 'A',
+      language: 'en',
+      duration: 30,
+      snippets: [{ start: 0, end: 30, text: 'Docker basics' }],
+    };
+    const b = {
+      id: 'M7lc1UVf-VE',
+      title: 'B',
+      language: 'en',
+      duration: 5400,
+      snippets: [
+        { start: 0, end: 1800, text: 'First lesson' },
+        { start: 1800, end: 3600, text: 'Second lesson' },
+        { start: 3600, end: 5400, text: 'Third lesson' },
+      ],
+    };
     const result = await analyze({ a, b }, 'new', 0, new LocalStore(dir));
     assert.equal(calls, 3);
     assert.equal(result.videos.b.duration, 5400);
-    assert.deepEqual(result.segments.filter((s) => s.source === 'b').map((s) => [s.start, s.end]), [
-      [0, 1800], [1800, 3600], [3600, 5400],
-    ]);
+    assert.deepEqual(
+      result.segments.filter((s) => s.source === 'b').map((s) => [s.start, s.end]),
+      [
+        [0, 1800],
+        [1800, 3600],
+        [3600, 5400],
+      ],
+    );
     assert.equal(result.usage?.inputTokens, 300);
   } finally {
     globalThis.fetch = original;
@@ -201,34 +240,72 @@ test('matches a short next tutorial against later parts of a long first tutorial
     const captions = JSON.parse(request.messages[1].content);
     const laterPart = captions.a.captions[0].start > 0;
     return Response.json({
-      choices: [{ finish_reason: 'stop', message: { content: JSON.stringify({
-        title: 'Docker lessons',
-        sections: [
-          { source: 'a', title: 'Base', startIndex: 0, endIndex: 0, kind: 'baseline', confidence: 'high', reason: 'Foundation.' },
-          {
-            source: 'b', title: 'Next lesson', startIndex: 0, endIndex: 0,
-            kind: laterPart ? 'overlap' : 'new', confidence: 'high', reason: 'Same explanation.',
-            addsDistinctDetail: false,
-            matchStartIndex: laterPart ? 0 : null, matchEndIndex: laterPart ? 0 : null,
+      choices: [
+        {
+          finish_reason: 'stop',
+          message: {
+            content: JSON.stringify({
+              title: 'Docker lessons',
+              sections: [
+                {
+                  source: 'a',
+                  title: 'Base',
+                  startIndex: 0,
+                  endIndex: 0,
+                  kind: 'baseline',
+                  confidence: 'high',
+                  reason: 'Foundation.',
+                },
+                {
+                  source: 'b',
+                  title: 'Next lesson',
+                  startIndex: 0,
+                  endIndex: 0,
+                  kind: laterPart ? 'overlap' : 'new',
+                  confidence: 'high',
+                  reason: 'Same explanation.',
+                  addsDistinctDetail: false,
+                  matchStartIndex: laterPart ? 0 : null,
+                  matchEndIndex: laterPart ? 0 : null,
+                },
+              ],
+            }),
           },
-        ],
-      }) } }],
+        },
+      ],
       usage: { prompt_tokens: 100, completion_tokens: 50 },
     });
   };
   try {
-    const a = { id: 'dQw4w9WgXcQ', title: 'A', language: 'en', duration: 5400, snippets: [
-      { start: 0, end: 1800, text: 'First lesson' },
-      { start: 1800, end: 3600, text: 'Second lesson' },
-      { start: 3600, end: 5400, text: 'Third lesson' },
-    ] };
-    const b = { id: 'M7lc1UVf-VE', title: 'B', language: 'en', duration: 30, snippets: [{ start: 0, end: 30, text: 'Docker basics' }] };
+    const a = {
+      id: 'dQw4w9WgXcQ',
+      title: 'A',
+      language: 'en',
+      duration: 5400,
+      snippets: [
+        { start: 0, end: 1800, text: 'First lesson' },
+        { start: 1800, end: 3600, text: 'Second lesson' },
+        { start: 3600, end: 5400, text: 'Third lesson' },
+      ],
+    };
+    const b = {
+      id: 'M7lc1UVf-VE',
+      title: 'B',
+      language: 'en',
+      duration: 30,
+      snippets: [{ start: 0, end: 30, text: 'Docker basics' }],
+    };
     const result = await analyze({ a, b }, 'new', 0, new LocalStore(dir));
     assert.equal(calls, 3);
     assert.equal(result.videos.a.duration, 5400);
-    assert.deepEqual(result.segments.filter((s) => s.source === 'a').map((s) => [s.start, s.end]), [
-      [0, 1800], [1800, 3600], [3600, 5400],
-    ]);
+    assert.deepEqual(
+      result.segments.filter((s) => s.source === 'a').map((s) => [s.start, s.end]),
+      [
+        [0, 1800],
+        [1800, 3600],
+        [3600, 5400],
+      ],
+    );
     assert.equal(result.segments.find((s) => s.source === 'b')?.suggested, false);
   } finally {
     globalThis.fetch = original;
@@ -242,19 +319,71 @@ test('a malformed long-video part is kept while valid parts remain usable; cost 
   globalThis.fetch = async (_url, init) => {
     const captions = JSON.parse(JSON.parse(String(init?.body)).messages[1].content);
     const middle = captions.b.captions[0].start === 1800;
-    return Response.json({ choices: [{ finish_reason: 'stop', message: { content: middle ? 'invalid json' : JSON.stringify({ title: 'Lessons', sections: [
-      { source: 'a', title: 'Base', startIndex: 0, endIndex: 0, kind: 'baseline', confidence: 'high', reason: 'Foundation.' },
-      { source: 'b', title: 'New lesson', startIndex: 0, endIndex: 0, kind: 'new', confidence: 'high', reason: 'Distinct lesson.' },
-    ] }) } }], usage: { prompt_tokens: 100, completion_tokens: 50 } });
+    return Response.json({
+      choices: [
+        {
+          finish_reason: 'stop',
+          message: {
+            content: middle
+              ? 'invalid json'
+              : JSON.stringify({
+                  title: 'Lessons',
+                  sections: [
+                    {
+                      source: 'a',
+                      title: 'Base',
+                      startIndex: 0,
+                      endIndex: 0,
+                      kind: 'baseline',
+                      confidence: 'high',
+                      reason: 'Foundation.',
+                    },
+                    {
+                      source: 'b',
+                      title: 'New lesson',
+                      startIndex: 0,
+                      endIndex: 0,
+                      kind: 'new',
+                      confidence: 'high',
+                      reason: 'Distinct lesson.',
+                    },
+                  ],
+                }),
+          },
+        },
+      ],
+      usage: { prompt_tokens: 100, completion_tokens: 50 },
+    });
   };
   try {
-    const a = { id: 'dQw4w9WgXcQ', title: 'A', language: 'en', duration: 30, snippets: [{ start: 0, end: 30, text: 'Basics' }] };
-    const b = { id: 'M7lc1UVf-VE', title: 'B', language: 'en', duration: 5400, snippets: [
-      { start: 0, end: 1800, text: 'Lesson one' }, { start: 1800, end: 3600, text: 'Lesson two' }, { start: 3600, end: 5400, text: 'Lesson three' },
-    ] };
+    const a = {
+      id: 'dQw4w9WgXcQ',
+      title: 'A',
+      language: 'en',
+      duration: 30,
+      snippets: [{ start: 0, end: 30, text: 'Basics' }],
+    };
+    const b = {
+      id: 'M7lc1UVf-VE',
+      title: 'B',
+      language: 'en',
+      duration: 5400,
+      snippets: [
+        { start: 0, end: 1800, text: 'Lesson one' },
+        { start: 1800, end: 3600, text: 'Lesson two' },
+        { start: 3600, end: 5400, text: 'Lesson three' },
+      ],
+    };
     const result = await analyze({ a, b }, 'new', 0, new LocalStore(dir));
-    const parts = result.segments.filter(s => s.source === 'b');
-    assert.deepEqual(parts.map(s => [s.start, s.end]), [[0, 1800], [1800, 3600], [3600, 5400]]);
+    const parts = result.segments.filter((s) => s.source === 'b');
+    assert.deepEqual(
+      parts.map((s) => [s.start, s.end]),
+      [
+        [0, 1800],
+        [1800, 3600],
+        [3600, 5400],
+      ],
+    );
     assert.equal(parts[1].suggested, true);
     assert.equal(parts[1].kind, 'uncertain');
     assert.equal(result.usage, undefined);

@@ -39,8 +39,10 @@ export function ComparisonView({
   const [filter, setFilter] = useState<'all' | 'skipped' | 'included'>('all');
   const sections = eligibleSegments(comparison);
   const skipped = sections.filter((s) => !selected.includes(s.id));
-  const visibleSections = sections.filter((s) =>
-    filter === 'all' || (filter === 'skipped' ? !selected.includes(s.id) : selected.includes(s.id)),
+  const visibleSections = sections.filter(
+    (s) =>
+      filter === 'all' ||
+      (filter === 'skipped' ? !selected.includes(s.id) : selected.includes(s.id)),
   );
   const d = durations(comparison, selected);
   return (
@@ -48,11 +50,18 @@ export function ComparisonView({
       <div className="comparison-heading">
         <div>
           <p className="comparison-label">
-            {comparison.demo ? 'EXAMPLE COMPARISON' : 'YOUR COMPARISON'}{' '}
+            {comparison.demo
+              ? 'EXAMPLE COMPARISON'
+              : comparison.recorded
+                ? 'RECORDED LIVE RESULT'
+                : 'YOUR COMPARISON'}{' '}
             <span>
-              · {comparison.demo
+              ·{' '}
+              {comparison.demo
                 ? 'Illustrative data'
-                : Object.values(comparison.videos).some((video) => video.transcriptSource === 'elevenlabs')
+                : Object.values(comparison.videos).some(
+                      (video) => video.transcriptSource === 'elevenlabs',
+                    )
                   ? 'Based on captions and AI transcripts'
                   : 'Based on available captions'}
             </span>
@@ -74,7 +83,11 @@ export function ComparisonView({
           </div>
         </div>
       </div>
-      {comparison.notices?.map((notice) => <p className="form-note" role="status" key={notice}>{notice}</p>)}
+      {comparison.notices?.map((notice) => (
+        <p className="form-note" role="status" key={notice}>
+          {notice}
+        </p>
+      ))}
       <div className="timelines">
         {(['a', 'b'] as const).map((source) => (
           <div className="timeline-row" key={source}>
@@ -130,10 +143,16 @@ export function ComparisonView({
       </div>
       <div className="watchlist-panel">
         <div className="review-callout">
-          <div className="review-callout-icon" aria-hidden="true">↗</div>
+          <div className="review-callout-icon" aria-hidden="true">
+            ↗
+          </div>
           <div>
             <span className="review-eyebrow">BEFORE YOU PRESS PLAY</span>
-            <h3>{skipped.length ? `Review ${skipped.length} section${skipped.length === 1 ? '' : 's'} left out` : 'Nothing is left out'}</h3>
+            <h3>
+              {skipped.length
+                ? `Review ${skipped.length} section${skipped.length === 1 ? '' : 's'} left out`
+                : 'Nothing is left out'}
+            </h3>
             <p>
               {skipped.length
                 ? 'These sections are excluded from your watchlist. Open the caption evidence, then include anything you still want to watch.'
@@ -165,9 +184,8 @@ export function ComparisonView({
         </div>
         <div className="list-toolbar">
           <span>
-            {selected.filter((id) => sections.some((s) => s.id === id)).length}{' '}
-            of {sections.length} sections selected · {time(d.watch)} with
-            context
+            {selected.filter((id) => sections.some((s) => s.id === id)).length} of {sections.length}{' '}
+            sections selected · {time(d.watch)} with context
           </span>
           <div>
             <button onClick={onSelectAll}>Select all</button>
@@ -178,11 +196,13 @@ export function ComparisonView({
           </div>
         </div>
         <div className="watchlist-filters" aria-label="Filter watchlist sections">
-          {([
-            ['all', 'All', sections.length],
-            ['skipped', 'Left out', skipped.length],
-            ['included', 'Included', sections.length - skipped.length],
-          ] as const).map(([value, label, count]) => (
+          {(
+            [
+              ['all', 'All', sections.length],
+              ['skipped', 'Left out', skipped.length],
+              ['included', 'Included', sections.length - skipped.length],
+            ] as const
+          ).map(([value, label, count]) => (
             <button key={value} aria-pressed={filter === value} onClick={() => setFilter(value)}>
               {label} <span>{count}</span>
             </button>
@@ -229,12 +249,14 @@ export function ComparisonView({
             </div>
           ))}
           {!visibleSections.length && (
-            <p className="watchlist-empty">No sections in this view. Choose another filter above.</p>
+            <p className="watchlist-empty">
+              No sections in this view. Choose another filter above.
+            </p>
           )}
         </div>
         <p className="list-footnote">
-          Suggestions use captions or AI transcripts. Keep visual demonstrations when unsure. Selection includes 2
-          seconds of surrounding context.
+          Suggestions use captions or AI transcripts. Keep visual demonstrations when unsure.
+          Selection includes 2 seconds of surrounding context.
         </p>
       </div>
       {evidence && (
@@ -242,7 +264,11 @@ export function ComparisonView({
           <div className="evidence-content">
             <p>{evidence.reason}</p>
             <div className="evidence-meta">
-              {comparison.demo ? 'Illustrative caption excerpts' : 'Exact source caption excerpts'}{' '}
+              {comparison.demo
+                ? 'Illustrative caption excerpts'
+                : comparison.recorded
+                  ? 'Short source caption excerpts · open the video for full context'
+                  : 'Exact source caption excerpts'}{' '}
               · {evidence.confidence} confidence
             </div>
             {evidence.evidence.length ? (
@@ -269,8 +295,19 @@ export function ComparisonView({
               ))
             ) : (
               <p>
-                No caption evidence covers this interval. It remains selected to preserve context.
+                {comparison.recorded
+                  ? 'The public replay omits the full caption text. Review this interval in the original video.'
+                  : 'No caption evidence covers this interval. It remains selected to preserve context.'}
               </p>
+            )}
+            {comparison.recorded && (
+              <a
+                href={`https://www.youtube.com/watch?v=${comparison.videos[evidence.source].id}&t=${Math.floor(evidence.start)}s`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Review the original interval at {time(evidence.start)} <ExternalLink size={14} />
+              </a>
             )}
             <p className="muted">
               {comparison.demo

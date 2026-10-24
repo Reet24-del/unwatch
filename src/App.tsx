@@ -224,16 +224,41 @@ export default function App({ config }: { config: AppConfig }) {
                 ? 'Saved sessions'
                 : 'How it works'}
           </div>
-          <button
-            onClick={() => {
-              load(makeDemo(mode));
-              setToast('Example loaded. No API credits used.');
-            }}
-            disabled={busy}
-          >
-            Try an example
-            <ArrowRight size={17} />
-          </button>
+          <div className="topbar-actions">
+            <button
+              onClick={() => {
+                void fetch('/examples/react-comparison.json')
+                  .then((response) => {
+                    if (!response.ok)
+                      throw new Error('The recorded comparison could not be loaded.');
+                    return response.json();
+                  })
+                  .then((data: unknown) => {
+                    load(comparisonSchema.parse(data));
+                    setToast('Recorded live result loaded. No API credits used.');
+                  })
+                  .catch(() =>
+                    setError(
+                      'The recorded comparison could not be loaded. Try the example or reload the page.',
+                    ),
+                  );
+              }}
+              disabled={busy}
+            >
+              Replay a real result
+              <ArrowRight size={17} />
+            </button>
+            <button
+              onClick={() => {
+                load(makeDemo(mode));
+                setToast('Example loaded. No API credits used.');
+              }}
+              disabled={busy}
+            >
+              Try an example
+              <ArrowRight size={17} />
+            </button>
+          </div>
         </div>
         <AnimatePresence mode="wait" initial={false}>
           <m.div
@@ -252,26 +277,31 @@ export default function App({ config }: { config: AppConfig }) {
                   mode={mode}
                   setMode={changeMode}
                   error={error}
+                  unavailable={!config.liveReady}
                 />
-                {!compareFailed && <ComparisonView
-                  comparison={comparison}
-                  selected={selected}
-                  onToggle={(id) =>
-                    setSelected((s) => (s.includes(id) ? s.filter((i) => i !== id) : [...s, id]))
-                  }
-                  onSelectAll={() => setSelected(eligibleSegments(comparison).map((s) => s.id))}
-                  onReset={() => setSelected(defaultSelection(comparison))}
-                  onWatch={() => setPlayer(true)}
-                  onSave={save}
-                  saved={saved}
-                />}
+                {!compareFailed && (
+                  <ComparisonView
+                    comparison={comparison}
+                    selected={selected}
+                    onToggle={(id) =>
+                      setSelected((s) => (s.includes(id) ? s.filter((i) => i !== id) : [...s, id]))
+                    }
+                    onSelectAll={() => setSelected(eligibleSegments(comparison).map((s) => s.id))}
+                    onReset={() => setSelected(defaultSelection(comparison))}
+                    onWatch={() => setPlayer(true)}
+                    onSave={save}
+                    saved={saved}
+                  />
+                )}
                 <div className="workspace-footer">
                   <span>Less repetition. Your judgement stays in the loop.</span>
                   <div>
-                    <button onClick={() => setAssistant(true)}>
-                      <MessageSquare size={15} />
-                      Learning companion
-                    </button>
+                    {config.capabilities.backboard && (
+                      <button onClick={() => setAssistant(true)}>
+                        <MessageSquare size={15} />
+                        Learning companion
+                      </button>
+                    )}
                     {connection.signedIn && (
                       <button
                         onClick={() => {
@@ -361,10 +391,10 @@ export default function App({ config }: { config: AppConfig }) {
                 <div className="honest-note">
                   <h3>A useful shortcut, with limits.</h3>
                   <p>
-                    UNWATCH compares spoken transcripts, not video frames. Diagrams, silent coding and
-                    imperfect transcripts can hide important differences. Keep visual demonstrations
-                    when unsure. The example workspace uses authored illustrative content, not a
-                    live analysis.
+                    UNWATCH compares spoken transcripts, not video frames. Diagrams, silent coding
+                    and imperfect transcripts can hide important differences. Keep visual
+                    demonstrations when unsure. The example workspace uses authored illustrative
+                    content, not a live analysis.
                   </p>
                   <p>
                     For the first version: two public videos, each under three hours. Longer second

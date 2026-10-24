@@ -159,11 +159,14 @@ test('cited overlap with an additional caveat or an absent detail assessment sta
   for (const addsDistinctDetail of [true, undefined]) {
     const mixed = {
       ...base,
-      sections: [base.sections[0], {
-        ...base.sections[1],
-        reason: 'Repeats the VM comparison but also adds the OS-compatibility caveat.',
-        addsDistinctDetail,
-      }],
+      sections: [
+        base.sections[0],
+        {
+          ...base.sections[1],
+          reason: 'Repeats the VM comparison but also adds the OS-compatibility caveat.',
+          addsDistinctDetail,
+        },
+      ],
     };
     const section = materializeSections(mixed, { a: video, b: video })[1];
     assert.equal(section.suggested, true);
