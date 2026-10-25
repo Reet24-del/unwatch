@@ -18,11 +18,9 @@ Target: [Hacktoberfest Open-Source AI Challenge Week 3](https://dev.to/challenge
 - Five-case development pilot documented in `QUALITY.md`; fresh normal long React run additionally shown in the recording.
 - Actual sponsor use: Mastra, SerpApi, ElevenLabs, Ultramarine, MongoDB Atlas, Auth0, Render. No Backboard/Sentry/DigitalOcean claims.
 
-## Review before publishing
+## Publication completed
 
-1. Watch the final movie and read the unpublished DEV article. Video is edited, with synthetic narration; fresh and saved runs are labelled separately.
-2. Confirm personal eligibility and the AI-assisted disclosure.
-3. Publish the existing DEV draft using the official submission template before the deadline, then verify the published post and links. Nothing is submitted by preparing this folder.
+The owner explicitly authorized publication on 25 October. DEV displays “Posted on Oct 25” and the AI-assisted label. Both challenge tags and the in-post YouTube player are present. The embedded demo played successfully in the draft before publication. Personal eligibility remains governed by the official rules.
 
 ## Limits to state honestly
 

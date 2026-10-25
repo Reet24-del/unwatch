@@ -20,4 +20,4 @@ Updated 25 October 2026. Work proceeds in the order below. No secrets belong in 
 12. [x] Prepare a demo script and accurate article content using measured results and proven integrations.
 13. [x] Export a 2 minute 21 second narrated screen-recorded walkthrough from actual captured UI states and insert the public demo/video/source URLs in `DEV_ARTICLE.md`. Video: `/demo/`. It is labeled as an edited walkthrough with synthetic narration.
 14. [ ] Verify any additional partner account paths before listing their categories. These are optional: do not delay the core submission merely for more logos.
-15. [x] Final user review of the actual DEV article, AI disclosure, eligibility and publication. The complete unpublished draft is saved under Reet Singh on DEV with both required tags and the user-approved AI-assisted disclosure. Submit before the deadline in `SUBMISSION.md`.
+15. [x] Publish the owner-approved DEV article. The live post includes both required tags, the AI-assisted disclosure, the sister's exam-preparation story and a working YouTube demo embed. Publication was explicitly authorized by the owner on 25 October.
