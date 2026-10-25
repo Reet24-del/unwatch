@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { config } from './config';
-import { AppError } from './errors';
+import { AppError, ProviderError } from './errors';
 import type { Store } from './store';
 import {
   modelOutputSchema,
@@ -21,14 +21,40 @@ export async function providerJson(
 ): Promise<unknown> {
   try {
     const response = await fetch(url, { ...init, signal: AbortSignal.timeout(timeout) });
-    if (!response.ok)
-      throw new AppError(
-        response.status === 429 ? 429 : 502,
-        'PROVIDER_ERROR',
+    if (!response.ok) {
+      let reason = '';
+      const errorReader = response.body?.getReader();
+      if (errorReader) {
+        const chunks: Uint8Array[] = [];
+        let bytes = 0;
+        try {
+          while (true) {
+            const { done, value } = await errorReader.read();
+            if (done) break;
+            bytes += value.byteLength;
+            if (bytes > 16384) break;
+            chunks.push(value);
+          }
+          if (bytes <= 16384) {
+            const body = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+            const candidate = body?.detail?.status;
+            if (typeof candidate === 'string' && /^[a-z_]{1,64}$/.test(candidate))
+              reason = candidate;
+          }
+        } catch {
+          // An unreadable error body must not hide its HTTP status.
+        } finally {
+          await errorReader.cancel().catch(() => {});
+        }
+      }
+      throw new ProviderError(
+        response.status,
+        reason,
         response.status === 429
           ? 'A provider is rate-limited or out of credits. Try again later.'
           : 'A connected provider could not complete the request. Check its configuration and try again.',
       );
+    }
     const reader = response.body?.getReader();
     if (!reader) throw new Error('Empty response');
     const chunks: Uint8Array[] = [];
@@ -50,6 +76,12 @@ export async function providerJson(
     return JSON.parse(Buffer.concat(chunks).toString('utf8'));
   } catch (e) {
     if (e instanceof AppError) throw e;
+    if (e instanceof Error && (e.name === 'TimeoutError' || e.name === 'AbortError'))
+      throw new AppError(
+        504,
+        'PROVIDER_TIMEOUT',
+        'The provider request timed out. Please try again later.',
+      );
     throw new AppError(
       502,
       'PROVIDER_UNAVAILABLE',
@@ -130,10 +162,49 @@ async function transcribeWithElevenLabs(id: string, store: Store, cacheKey: stri
       );
     } catch (error) {
       if (error instanceof AppError && error.code === 'BUDGET_EXHAUSTED') throw error;
+      const prefix = 'SerpApi found no usable captions. ';
+      if (error instanceof ProviderError) {
+        if (error.reason === 'quota_exceeded' || error.reason === 'insufficient_credits')
+          throw new AppError(
+            429,
+            'TRANSCRIPTION_QUOTA',
+            `${prefix}ElevenLabs has insufficient transcription credits. Check its usage dashboard before retrying.`,
+          );
+        if (error.upstreamStatus === 401 || error.upstreamStatus === 403)
+          throw new AppError(
+            502,
+            'TRANSCRIPTION_AUTH',
+            `${prefix}ElevenLabs rejected the API key or its permissions. Check Speech to Text access in the key settings.`,
+          );
+        if (error.upstreamStatus === 429)
+          throw new AppError(
+            429,
+            'TRANSCRIPTION_RATE_LIMIT',
+            `${prefix}ElevenLabs is rate-limited. Wait before trying again.`,
+          );
+        if ([400, 404, 422].includes(error.upstreamStatus))
+          throw new AppError(
+            422,
+            'TRANSCRIPTION_SOURCE',
+            `${prefix}ElevenLabs could not process this video source (HTTP ${error.upstreamStatus}). The video may be unavailable or restricted to its downloader.`,
+          );
+        throw new AppError(
+          502,
+          'TRANSCRIPTION_PROVIDER',
+          `${prefix}ElevenLabs returned HTTP ${error.upstreamStatus}. Transcription is temporarily unavailable.`,
+        );
+      }
+      if (error instanceof AppError && error.code === 'PROVIDER_TIMEOUT')
+        throw new AppError(
+          504,
+          'TRANSCRIPTION_TIMEOUT',
+          `${prefix}ElevenLabs did not finish within 150 seconds. Try a shorter video or retry later.`,
+        );
+      if (error instanceof AppError && error.code === 'RESPONSE_TOO_LARGE') throw error;
       throw new AppError(
         502,
         'TRANSCRIPTION_FAILED',
-        'SerpApi found no captions, and ElevenLabs could not transcribe this YouTube link. Try another video.',
+        `${prefix}The ElevenLabs connection failed or returned an unreadable response. Try again later.`,
       );
     }
     const parsed = scribeResponse.safeParse(response);

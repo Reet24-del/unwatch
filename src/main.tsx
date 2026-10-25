@@ -1,34 +1,35 @@
-import { StrictMode } from 'react';
+import { StrictMode, lazy, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { LazyMotion, domMax, MotionConfig } from 'motion/react';
-import App from './App';
-import { ConnectionProvider, publicRequest, type AppConfig } from './lib/api';
+import Landing from './components/Landing';
 import './styles.css';
-const fallback: AppConfig = {
-  liveReady: false,
-  blockers: ['The API server could not be reached. Start it with npm run dev.'],
-  auth: null,
-  capabilities: { mastra: true },
-  limits: { maxMinutes: 180, maxCaptionBytes: 400000 },
-};
-async function loadConfig(): Promise<AppConfig> {
-  for (let attempt = 0; attempt < 3; attempt++) {
-    try {
-      return await publicRequest<AppConfig>('/api/config');
-    } catch {
-      if (attempt < 2) await new Promise((resolve) => setTimeout(resolve, 500 * (attempt + 1)));
-    }
-  }
-  return fallback;
-}
-const config = await loadConfig();
+const WorkspaceEntry = lazy(() => import('./WorkspaceEntry'));
+const query = new URLSearchParams(window.location.search);
+// Auth0's existing registered root callback must still mount its provider.
+const authCallback = query.has('state') && (query.has('code') || query.has('error'));
+const isWorkspace =
+  window.location.pathname.startsWith('/workspace') ||
+  window.location.hash === '#main' ||
+  authCallback;
+document
+  .querySelector('meta[name="theme-color"]')
+  ?.setAttribute('content', isWorkspace ? '#131312' : '#ee4b16');
+document.title = isWorkspace
+  ? 'UNWATCH — Your workspace'
+  : 'UNWATCH — Skip the replay. Keep the discovery.';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <LazyMotion features={domMax} strict>
       <MotionConfig reducedMotion="user">
-        <ConnectionProvider config={config}>
-          <App config={config} />
-        </ConnectionProvider>
+        <Suspense
+          fallback={
+            <div className="workspace-loading" role="status">
+              Opening UNWATCH…
+            </div>
+          }
+        >
+          {isWorkspace ? <WorkspaceEntry /> : <Landing />}
+        </Suspense>
       </MotionConfig>
     </LazyMotion>
   </StrictMode>,

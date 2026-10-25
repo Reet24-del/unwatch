@@ -50,11 +50,9 @@ export function createApp(store: Store) {
   app.use('/api', (req, res, next) => {
     res.setHeader('Cache-Control', 'no-store');
     if (req.method !== 'GET' && req.headers.origin && !allowedOrigins.has(req.headers.origin))
-      return res
-        .status(403)
-        .json({
-          error: { code: 'ORIGIN_REJECTED', message: 'This request came from a different site.' },
-        });
+      return res.status(403).json({
+        error: { code: 'ORIGIN_REJECTED', message: 'This request came from a different site.' },
+      });
     next();
   });
   app.get('/api/health', (_req, res) => res.json({ ok: true }));
@@ -134,12 +132,19 @@ export function createApp(store: Store) {
             code: z.enum([
               'NO_CAPTIONS',
               'TRANSCRIPTION_FAILED',
+              'TRANSCRIPTION_QUOTA',
+              'TRANSCRIPTION_AUTH',
+              'TRANSCRIPTION_RATE_LIMIT',
+              'TRANSCRIPTION_SOURCE',
+              'TRANSCRIPTION_PROVIDER',
+              'TRANSCRIPTION_TIMEOUT',
               'INVALID_CAPTIONS',
               'VIDEO_TOO_LONG',
               'CAPTIONS_TOO_DENSE',
               'RESPONSE_TOO_LARGE',
               'PROVIDER_ERROR',
               'PROVIDER_UNAVAILABLE',
+              'PROVIDER_TIMEOUT',
               'INCOMPLETE_ANALYSIS',
               'INVALID_ANALYSIS',
               'INVALID_EVIDENCE',
@@ -149,11 +154,7 @@ export function createApp(store: Store) {
           })
           .safeParse(error);
         if (stepError.success)
-          throw new AppError(
-            stepError.data.status,
-            stepError.data.code,
-            stepError.data.message,
-          );
+          throw new AppError(stepError.data.status, stepError.data.code, stepError.data.message);
         throw new AppError(
           502,
           'ANALYSIS_FAILED',

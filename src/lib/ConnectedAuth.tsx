@@ -17,7 +17,7 @@ function AuthConnection({ children }: { children: ReactNode }) {
         configured: true,
         loading: auth.isLoading,
         login: () => {
-          void auth.loginWithRedirect();
+          void auth.loginWithRedirect({ appState: { returnTo: '/workspace' } });
         },
         logout: () => {
           void auth.logout({ logoutParams: { returnTo: window.location.origin } });
@@ -48,6 +48,7 @@ export default function ConnectedAuth({
       clientId={auth.clientId}
       authorizationParams={{ redirect_uri: window.location.origin, audience: auth.audience }}
       cacheLocation="memory"
+      onRedirectCallback={() => window.history.replaceState({}, document.title, '/workspace')}
     >
       <AuthConnection>{children}</AuthConnection>
     </Auth0Provider>

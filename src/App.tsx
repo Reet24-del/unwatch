@@ -223,7 +223,7 @@ export default function App({ config }: { config: AppConfig }) {
       <main id="main">
         <div className="topbar">
           <div>
-            My workspace <span>/</span>{' '}
+            <a href="/" className="workspace-home">Home</a> <span>/</span>{' '}
             {page === 'workspace'
               ? 'New comparison'
               : page === 'saved'

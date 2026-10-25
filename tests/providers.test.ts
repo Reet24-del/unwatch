@@ -5,6 +5,7 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { LocalStore } from '../server/store';
 import { analyze, fetchTranscript } from '../server/providers';
+import { AppError } from '../server/errors';
 import { comparisonWorkflow } from '../server/workflow';
 import { config } from '../server/config';
 
@@ -86,6 +87,52 @@ test('uses ElevenLabs source_url when YouTube captions are absent, then caches t
     await rm(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
   }
 });
+test('transcription failures distinguish quota, permissions, source rejection and timeout without exposing provider text', async () => {
+  const original = globalThis.fetch;
+  const originalElevenKey = config.elevenKey;
+  config.elevenKey = 'test-key';
+  const cases = [
+    { status: 401, reason: 'quota_exceeded', code: 'TRANSCRIPTION_QUOTA' },
+    { status: 401, reason: 'missing_permissions', code: 'TRANSCRIPTION_AUTH' },
+    { status: 403, reason: '', code: 'TRANSCRIPTION_AUTH' },
+    { status: 429, reason: '', code: 'TRANSCRIPTION_RATE_LIMIT' },
+    { status: 400, reason: 'download_failed', code: 'TRANSCRIPTION_SOURCE' },
+    { status: 422, reason: '', code: 'TRANSCRIPTION_SOURCE' },
+    { status: 503, reason: '', code: 'TRANSCRIPTION_PROVIDER' },
+    { status: 0, reason: '', code: 'TRANSCRIPTION_TIMEOUT' },
+  ];
+  try {
+    for (const item of cases) {
+      const dir = await mkdtemp(join(tmpdir(), 'unwatch-failure-'));
+      globalThis.fetch = async (url) => {
+        if (String(url).includes('serpapi')) return Response.json({ error: 'No transcript' });
+        if (!item.status) throw new DOMException('Sensitive request details', 'TimeoutError');
+        return Response.json(
+          { detail: { status: item.reason, message: 'private-secret-url' } },
+          { status: item.status },
+        );
+      };
+      try {
+        await assert.rejects(
+          fetchTranscript('dQw4w9WgXcQ', new LocalStore(dir)),
+          (error: unknown) => {
+            assert.ok(error instanceof AppError);
+            assert.equal(error.code, item.code);
+            assert.ok(!error.message.includes('private-secret-url'));
+            assert.ok(!error.message.includes('Sensitive request details'));
+            return true;
+          },
+        );
+      } finally {
+        await rm(dir, { recursive: true, force: true });
+      }
+    }
+  } finally {
+    globalThis.fetch = original;
+    config.elevenKey = originalElevenKey;
+  }
+});
+
 test('Mastra executes retrieval, model call and grounded watchlist validation', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'unwatch-workflow-'));
   const original = globalThis.fetch;

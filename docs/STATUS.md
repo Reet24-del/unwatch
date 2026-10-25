@@ -16,7 +16,7 @@
 
 ## Verified
 
-- 18 automated tests and the production build pass.
+- 19 automated tests and the production build pass, including safe transcription failure classification.
 - Five short-video comparison configurations completed after the detail guard. The one proposed skip was reviewed at caption level. Reversed pairs are included, so this is not five independent topics or a held-out benchmark.
 - A previous real ElevenLabs source-URL transcription supplied the captionless Docker cache. Long-course comparisons worked before the latest recovery change; a later malformed result led to the tested recovery path.
 - Real embedded playback, selected timestamp, Next section, pause, full-video selection and source URL checked in the browser. The public player also automatically advanced across the omitted interval to its second selected range at 02:04.
