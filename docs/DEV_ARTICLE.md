@@ -24,6 +24,8 @@ The theme is “Slow and Steady.” For someone juggling two sets of exams, spen
 
 ## Demo
 
+**Live app:** [unwatch-byeb.onrender.com](https://unwatch-byeb.onrender.com/) · [Open the workspace](https://unwatch-byeb.onrender.com/workspace)
+
 {% youtube p7eV_DZNEIk %}
 
 [Try UNWATCH](https://unwatch-byeb.onrender.com) · [Watch the short walkthrough](https://unwatch-byeb.onrender.com/demo/)
