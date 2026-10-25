@@ -13,12 +13,16 @@ export interface Store {
   list<T>(prefix: string): Promise<T[]>;
   reserve(key: string, amount: number, limit: number): Promise<void>;
 }
-function quota() {
-  return new AppError(
-    429,
-    'BUDGET_EXHAUSTED',
-    'The prototype allowance is used up. Saved sessions still work; new analysis is paused.',
-  );
+function quota(key: string) {
+  const message =
+    key === 'elevenlabs-attempts'
+      ? "The prototype's audio-transcription attempt limit has been reached. Try a tutorial with captions, or replay a saved result."
+      : key.startsWith('serp')
+        ? "The prototype's caption lookup allowance has been reached. New caption retrieval is paused; you can replay a saved result."
+        : key === 'paper-cents'
+          ? "The prototype's model-analysis allowance has been reached. You can still replay and review saved results."
+          : 'The prototype allowance is used up. Saved sessions still work; new analysis is paused.';
+  return new AppError(429, 'BUDGET_EXHAUSTED', message);
 }
 
 // One queue protects read-modify-write operations inside the single local server process.
@@ -82,7 +86,7 @@ export class LocalStore implements Store {
     await this.transaction((data) => {
       const k = `budget:${key}`;
       const used = Number(data[k]?.value || 0);
-      if (!Number.isFinite(limit) || amount < 0 || used + amount > limit) throw quota();
+      if (!Number.isFinite(limit) || amount < 0 || used + amount > limit) throw quota(key);
       data[k] = { _id: k, value: used + amount };
     });
   }
@@ -116,7 +120,7 @@ class MongoStore implements Store {
     return rows.map((row) => row.value as T);
   }
   async reserve(key: string, amount: number, limit: number) {
-    if (!Number.isFinite(limit) || amount < 0) throw quota();
+    if (!Number.isFinite(limit) || amount < 0) throw quota(key);
     try {
       await this.budgets.updateOne({ _id: key }, { $setOnInsert: { used: 0 } }, { upsert: true });
     } catch (e) {
@@ -127,7 +131,7 @@ class MongoStore implements Store {
       { $inc: { used: amount } },
       { returnDocument: 'after' },
     );
-    if (!updated) throw quota();
+    if (!updated) throw quota(key);
   }
 }
 export async function createStore(): Promise<Store> {

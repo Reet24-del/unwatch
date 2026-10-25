@@ -2,7 +2,7 @@
 
 **Your learning, minus the replay.** Compare two YouTube tutorials, review what the second adds, and watch an editable selection of original sections.
 
-[Public demo](https://unwatch-byeb.onrender.com) · [Source](https://github.com/Reet24-del/unwatch) · [73-second walkthrough](https://unwatch-byeb.onrender.com/demo/)
+[Public demo](https://unwatch-byeb.onrender.com) · [Source](https://github.com/Reet24-del/unwatch) · [2-minute screen-recorded walkthrough](https://unwatch-byeb.onrender.com/demo/)
 
 The public preview provides an illustrative example and a labeled replay of one real analysis without API credits. New public analyses remain disabled until production accounts are configured. Render's free service may take a moment to wake up.
 

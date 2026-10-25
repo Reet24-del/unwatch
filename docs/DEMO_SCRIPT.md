@@ -1,15 +1,19 @@
-# UNWATCH — 75-second demo script
+# UNWATCH submission film
 
-Use the real React pair from `QUALITY.md` for the result; a fresh model run can vary, so narrate the exact on-screen numbers. Never show `.env`, account dashboards, browser history, or unrelated recommended videos in the recording.
+Duration: 2:21. 1920×1080, 30 fps. Edited from the owner’s supplied screen recording; original recording remains untouched. Local Kokoro synthetic narration, original synthesized ambient score, burned-in sentence captions, and downloadable SRT/VTT. No paid narration API.
 
-| Time | Screen action | Narration |
-| --- | --- | --- |
-| 0–8s | Workspace and two tutorial links | “A second tutorial often starts by explaining what you already know. UNWATCH helps you find what it adds.” |
-| 8–18s | Real result; show source titles and totals | “This is a real comparison of two React tutorials. The second uses an interactive 3D example, so most of it stays.” |
-| 18–31s | Review left-out sections; open the state-value/setter evidence | “This explanation is repeated. Both caption excerpts say useState returns the current value and a setter. The app links back to the original source.” |
-| 31–40s | Restore the skip; show total increasing; reset suggestions | “I can put it back with one click. I decide what to watch.” |
-| 40–53s | Watch selected; press Play; Next section; pause | “Playback uses the original YouTube video at the selected intervals. Pausing stays paused, and full-video mode lets me explore freely.” |
-| 53–64s | A zero-skip Docker or unrelated-topic result | “Sometimes the best answer is to keep everything. New examples and uncertain sections remain included.” |
-| 64–75s | Architecture text and real measured model cost | “Mastra runs the workflow, SerpApi retrieves captions, ElevenLabs handles missing captions, and Ultramarine compares explanations. The model cost for this run was about four-tenths of a cent.” |
+| Time | Content                                               |
+| ---- | ----------------------------------------------------- |
+| 0:00 | Cinematic problem/brand introduction                  |
+| 0:08 | Landing and two-link workflow                         |
+| 0:26 | Analysis, with shortened wait disclosed               |
+| 0:35 | Fresh long React comparison: everything retained      |
+| 0:47 | Evidence and original-source links                    |
+| 1:02 | Saved real React comparison: about 59 seconds omitted |
+| 1:17 | Paired caption evidence for the proposed skip         |
+| 1:30 | Checkbox and Watch selected controls explained        |
+| 1:40 | Seven connected services and their roles              |
+| 1:58 | Estimated model cost and limitations                  |
+| 2:11 | Cinematic closing and links                           |
 
-End with the public demo and repository URLs once available. Put source links and the full limitations in the DEV article. A thumbnail can use the existing glass illustration and the words “Learn the difference.”
+Login screens, unrelated searching, buffering and ads are omitted. The supplied footage shows the checkbox and playback button but does not demonstrate restoring a section or playing the internal player; narration explains those controls without claiming a recorded click. Playback was separately checked in browser QA. The saved analysis is explicitly distinguished from the fresh long comparison. Model estimate excludes retrieval, transcription and failed attempts.

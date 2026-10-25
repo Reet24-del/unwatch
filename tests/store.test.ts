@@ -4,6 +4,29 @@ import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { LocalStore } from '../server/store';
+import { AppError } from '../server/errors';
+
+test('exhausted allowances identify the affected service without changing the spending limits', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'unwatch-allowance-'));
+  try {
+    const store = new LocalStore(dir);
+    for (const [key, expected] of [
+      ['elevenlabs-attempts', /audio-transcription attempt limit/],
+      ['serp-total', /caption lookup allowance/],
+      ['paper-cents', /model-analysis allowance/],
+    ] as const) {
+      await assert.rejects(store.reserve(key, 1, 0), (error: unknown) => {
+        assert.ok(error instanceof AppError);
+        assert.equal(error.code, 'BUDGET_EXHAUSTED');
+        assert.match(error.message, expected);
+        return true;
+      });
+      await assert.rejects(new LocalStore(dir).reserve(key, 1, 0));
+    }
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+});
 
 test('concurrent reservations cannot exceed budget and survive restart', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'unwatch-test-'));

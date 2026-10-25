@@ -1,4 +1,4 @@
-# Build status — 24 October 2026
+# Build status — 25 October 2026
 
 ## Delivered
 
@@ -11,14 +11,14 @@
 - Budget reservations, caching, URL/schema checks, rate limits, same-origin enforcement, and optional MongoDB/Auth0/Backboard/Sentry adapters.
 - Public source: https://github.com/Reet24-del/unwatch.
 - Free Render preview: https://unwatch-byeb.onrender.com. Public live analysis is enabled with SerpApi, Ultramarine, ElevenLabs, MongoDB Atlas and Auth0 configured. The first build issue (production npm omitting build tools) was fixed with `npm ci --include=dev`.
-- A 73-second narrated walkthrough from real captured UI states: https://unwatch-byeb.onrender.com/demo/. It is edited and uses offline synthetic speech.
+- A 2 minute 21 second narrated screen-recorded walkthrough from the owner’s real screen recording: https://unwatch-byeb.onrender.com/demo/. It is edited and uses offline synthetic speech.
 - A complete DEV article draft, demo script, evaluation and ordered tracker: `DEV_ARTICLE.md`, `DEMO_SCRIPT.md`, `QUALITY.md`, `TODO.md`.
 
 ## Verified
 
-- 19 automated tests and the production build pass, including safe transcription failure classification.
+- 20 automated tests and the production build pass, including safe transcription failure classification.
 - Five short-video comparison configurations completed after the detail guard. The one proposed skip was reviewed at caption level. Reversed pairs are included, so this is not five independent topics or a held-out benchmark.
-- A previous real ElevenLabs source-URL transcription supplied the captionless Docker cache. Long-course comparisons worked before the latest recovery change; a later malformed result led to the tested recovery path.
+- A previous real ElevenLabs source-URL transcription supplied the captionless Docker cache. The supplied screen recording additionally shows a fresh normal long React comparison retaining about 80 minutes with zero omissions. Malformed-part recovery has automated coverage and was not deliberately triggered live.
 - Real embedded playback, selected timestamp, Next section, pause, full-video selection and source URL checked in the browser. The public player also automatically advanced across the omitted interval to its second selected range at 02:04.
 - Latest local interface inspected at 390px and 320px; console warning/error collection was empty. Screenshot: `design/mobile-final.png`.
 - Git uses the owner's private noreply address. `.env`, `.data`, `.qa`, dependencies and build output are ignored. A pre-publication scan found no configured provider secrets in staged files.
@@ -30,7 +30,7 @@ Atlas project and free cluster are created; the database user is restricted to `
 ## Remaining
 
 1. Verify isolation with two real signed-in accounts; only one real account was used in the public smoke test.
-2. A live rerun of long-course recovery and additional independent topic groups. Use the shared MongoDB ledger and check available allowance before another long run; do not rerun the initial local-ledger import after the approved reconciliation.
-3. Final user review of the saved DEV draft. The user-approved AI-assisted disclosure is saved. The deployed replay/evidence/save/reload checks passed; the public walkthrough played and reported a 73.535-second duration.
+2. Additional independent topic groups and a live malformed-part recovery test. A fresh normal long React run is shown in the supplied recording; malformed-part recovery remains regression-tested. Use the shared MongoDB ledger and check available allowance before another long run; do not rerun the initial local-ledger import after the approved reconciliation.
+3. Final user review of the saved DEV draft. The user-approved AI-assisted disclosure is saved. The deployed replay/evidence/save/reload checks passed; the public walkthrough played and reported a 141.257-second duration.
 4. Publication of the DEV article through the official submission template. It is saved as an unpublished draft under Reet Singh; nothing has been submitted.
 5. Optional partner paths need their own live evidence before those categories are added. Backboard memory deletion controls remain a wider-launch follow-up.

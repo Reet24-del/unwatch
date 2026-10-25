@@ -105,14 +105,20 @@
   <body>
     <main>
       <header><strong>UNWATCH</strong><a href="/workspace">Open the workspace ↗</a></header>
-      <p class="tag">73 seconds · captured UI walkthrough</p>
+      <p class="tag">2 min 21 sec · real screen recording</p>
       <h1>Less replay. More progress.</h1>
       <p>
-        See a real tutorial comparison, review the evidence behind a skip, restore a section, and
-        watch the original video.
+        Follow a fresh long-tutorial comparison, inspect source evidence, and review a saved React
+        result with a suggested skip. See how to choose your own watchlist.
       </p>
-      <video controls preload="metadata" aria-label="Narrated UNWATCH walkthrough">
+      <video
+        controls
+        preload="metadata"
+        poster="/demo/poster.jpg"
+        aria-label="Narrated UNWATCH walkthrough"
+      >
         <source src="/demo/unwatch-walkthrough.mp4" type="video/mp4" />
+        <track kind="captions" src="/demo/unwatch-subtitles.vtt" srclang="en" label="English" />
         Your browser cannot play this video.
         <a href="/demo/unwatch-walkthrough.mp4">Download the walkthrough</a>.
       </video>
@@ -120,10 +126,14 @@
         <a href="/workspace">Replay the real result in the app</a
         ><a href="https://github.com/Reet24-del/unwatch">Explore the source</a>
       </nav>
+      <p>
+        <a href="/demo/unwatch-walkthrough.mp4" download>Download MP4</a> ·
+        <a href="/demo/unwatch-subtitles.srt" download>Download subtitles</a>
+      </p>
       <footer>
-        Edited from captured app states with offline synthetic narration. The React result is a
-        saved live analysis; it uses no new API credits when replayed. Speech-based comparison can
-        miss useful visual details. You decide what to watch.
+        Edited from a real screen recording with local synthetic narration and an original ambient
+        score. The shorter React result is a saved live analysis; it uses no new API credits when
+        replayed. Speech-based comparison can miss useful visual details. You decide what to watch.
       </footer>
     </main>
   </body>

@@ -1,0 +1,159 @@
+1
+00:00:00,500 --> 00:00:02,564
+You have already watched one tutorial.
+
+2
+00:00:02,564 --> 00:00:05,316
+The next one starts from the beginning again.
+
+3
+00:00:05,316 --> 00:00:06,004
+Meet Unwatch.
+
+4
+00:00:08,050 --> 00:00:12,998
+Unwatch compares two YouTube tutorials, so you can review what the next explanation
+
+5
+00:00:12,998 --> 00:00:15,282
+adds before spending time watching it.
+
+6
+00:00:16,032 --> 00:00:20,717
+First, paste the tutorial you have watched, then the one you are considering.
+
+7
+00:00:20,717 --> 00:00:23,600
+Find what's new focuses on the second video.
+
+8
+00:00:23,600 --> 00:00:26,123
+Combine both builds a watchlist from both.
+
+9
+00:00:26,873 --> 00:00:31,737
+The app retrieves timed captions, compares the explanations, and checks the references.
+
+10
+00:00:31,737 --> 00:00:34,980
+The analysis wait is shortened in this edit.
+
+11
+00:00:35,730 --> 00:00:39,708
+This longer React comparison keeps its whole assessed timeline.
+
+12
+00:00:39,708 --> 00:00:41,476
+Nothing is left out.
+
+13
+00:00:41,476 --> 00:00:46,781
+New examples and uncertain sections remain included, so a shortcut needs evidence.
+
+14
+00:00:47,531 --> 00:00:50,889
+Click a section to inspect the source captions and timestamps.
+
+15
+00:00:50,889 --> 00:00:56,598
+Each source link opens the original video at that moment, so you can check the full context.
+
+16
+00:00:57,348 --> 00:00:59,979
+You still watch the original creator's video.
+
+17
+00:00:59,979 --> 00:01:02,233
+Unwatch organizes your route through it.
+
+18
+00:01:02,983 --> 00:01:06,683
+Now, a saved analysis of two other React tutorials.
+
+19
+00:01:06,683 --> 00:01:09,561
+This is a real result, clearly labelled.
+
+20
+00:01:09,561 --> 00:01:12,439
+Replaying it uses no new API credits.
+
+21
+00:01:12,439 --> 00:01:16,551
+About fifty nine seconds of repeated explanation are left out.
+
+22
+00:01:17,301 --> 00:01:18,979
+Open the suggested skip.
+
+23
+00:01:18,979 --> 00:01:23,175
+Both excerpts describe the current state value and its setter.
+
+24
+00:01:23,175 --> 00:01:25,273
+The interactive examples stay included.
+
+25
+00:01:25,273 --> 00:01:29,888
+Short quotes, timestamps, and source links let you judge the suggestion.
+
+26
+00:01:30,638 --> 00:01:34,960
+Use the include checkbox to restore any section you still want.
+
+27
+00:01:34,960 --> 00:01:37,317
+Watch selected opens your chosen intervals.
+
+28
+00:01:37,317 --> 00:01:40,067
+Full video mode lets you explore freely.
+
+29
+00:01:40,817 --> 00:01:42,994
+Mastra runs the workflow.
+
+30
+00:01:42,994 --> 00:01:44,627
+SerpApi retrieves captions.
+
+31
+00:01:44,627 --> 00:01:50,071
+ElevenLabs can transcribe missing captions, and Ultramarine compares the explanations.
+
+32
+00:01:50,071 --> 00:01:52,793
+MongoDB stores sessions and budgets.
+
+33
+00:01:52,793 --> 00:01:57,692
+Auth0 handles sign in, and Render hosts the app.
+
+34
+00:01:58,442 --> 00:02:04,522
+The saved React run used about four tenths of a cent in estimated model usage.
+
+35
+00:02:04,522 --> 00:02:11,007
+Speech can miss visual details, and live requests depend on provider availability and the prototype allowance.
+
+36
+00:02:11,757 --> 00:02:15,066
+Try the recorded result and explore the source.
+
+37
+00:02:15,066 --> 00:02:17,134
+Choose what deserves your time.
+
+38
+00:02:17,134 --> 00:02:17,548
+Unwatch.
+
+39
+00:02:17,548 --> 00:02:18,375
+Less replay.
+
+40
+00:02:18,375 --> 00:02:19,202
+More progress.
