@@ -8,11 +8,13 @@ _This is a submission for the [Hacktoberfest Open-Source AI Challenge Week 3: Sl
 
 ## What I Built
 
-My sister is preparing for her board exams and entrance exams at the same time. There is a lot to cover, and not enough time to watch every explanation from the beginning.
+My sister is preparing for her board exams alongside **NIFT and UCEED 2027**. Her study time has to stretch across schoolwork and entrance preparation, and YouTube is part of that routine.
 
-She opens another video to understand a topic better. But she has to watch part of it just to find out that she already knows that part. What she needs might be further ahead: a different explanation, a new example, or the one step she did not understand before.
+She had already watched [one preparation session](https://www.youtube.com/live/WEedKEfzRm8). When she wanted to move to another video, the question was simple: **which parts would actually add something?**
 
-That is the problem behind **UNWATCH**: how do you find what the next tutorial adds before spending your study time replaying what you already know?
+She wanted the explanations she had missed, the extra facts and figures, and a different way of understanding a topic. Finding those parts meant spending more time watching material she had already covered. The video could be useful, but she had to sit through it to find out where.
+
+That is where **UNWATCH** started. Before asking someone to commit to another lesson, could an app show them what appears familiar, what seems new, and the evidence behind that judgement?
 
 I built it to compare those two tutorials. Paste the YouTube link you've watched and the one you're considering. UNWATCH reads the available captions, identifies possible repetitions, and creates an editable watchlist of the original video sections. New examples and uncertain material stay included.
 
@@ -84,7 +86,9 @@ That mattered when I found the bad skip. I could change the validation boundary 
 
 ## The Lazy Payoff
 
-My sister has tried the prototype. Her situation shaped the problem: she has already covered part of a topic and needs another explanation without restarting the whole lesson. The examples measured here are programming tutorials; I have not yet established how well the app works on board-exam or entrance-exam material.
+My sister has tried the prototype. Her first use case is choosing which parts of a second preparation video deserve her attention: a new explanation, an additional fact, or a detail the previous lesson did not cover. The goal is to leave more time for the rest of her preparation.
+
+The exam-preparation story explains who I built for. The measured comparisons in this post use programming tutorials; evaluating NIFT and UCEED lessons is the next step.
 
 UNWATCH takes on the comparison work: finding the repeated explanation, showing its evidence, and lining up the remaining intervals. The learner keeps the final decision.
 
