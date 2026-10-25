@@ -24,6 +24,8 @@ The theme is “Slow and Steady.” For someone juggling two sets of exams, spen
 
 ## Demo
 
+{% youtube p7eV_DZNEIk %}
+
 [Try UNWATCH](https://unwatch-byeb.onrender.com) · [Watch the short walkthrough](https://unwatch-byeb.onrender.com/demo/)
 
 Choose **Replay a real result** to open the exact measured comparison without spending credits. The public site also includes a clearly labeled illustrative example. The 2 minute 21 second walkthrough is edited from my real screen recording, with local synthetic narration, captions, and an original ambient score. Waiting is shortened. It shows a fresh long React comparison and then the separately labelled saved React result. The live results below come from real YouTube captions and a real transcription path, rather than that example.
