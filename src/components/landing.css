@@ -566,6 +566,19 @@
     right: max(2%, calc((100% - 1550px) / 2));
   }
 }
+@media (min-width: 1151px) and (max-width: 1350px) {
+  .landing-laptop {
+    width: 650px;
+    right: -2%;
+    top: 300px;
+  }
+  .landing-copy p {
+    max-width: 500px;
+  }
+  .landing-hero {
+    height: 900px;
+  }
+}
 @media (max-width: 1150px) {
   .landing-laptop {
     width: 650px;
