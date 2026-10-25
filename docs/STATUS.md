@@ -1,5 +1,9 @@
 # Build status — 25 October 2026
 
+**Published on 25 October 2026:** https://dev.to/reet_singh_ee97da2986538e/unwatch-finding-what-a-second-tutorial-actually-adds-4hm0
+The owner authorized publication. The live post includes the YouTube demo embed, both challenge tags and the AI-assisted disclosure.
+
+
 ## Delivered
 
 - React/TypeScript comparison workspace with animated illustration, timelines, exact source links, section review, inclusion controls and saved local sessions.
@@ -31,6 +35,6 @@ Atlas project and free cluster are created; the database user is restricted to `
 
 1. Verify isolation with two real signed-in accounts; only one real account was used in the public smoke test.
 2. Additional independent topic groups and a live malformed-part recovery test. A fresh normal long React run is shown in the supplied recording; malformed-part recovery remains regression-tested. Use the shared MongoDB ledger and check available allowance before another long run; do not rerun the initial local-ledger import after the approved reconciliation.
-3. Final user review of the saved DEV draft. The user-approved AI-assisted disclosure is saved. The deployed replay/evidence/save/reload checks passed; the public walkthrough played and reported a 141.257-second duration.
-4. Publication of the DEV article through the official submission template. It is saved as an unpublished draft under Reet Singh; nothing has been submitted.
+3. Completed: owner authorized publication of the DEV post. The user-approved AI-assisted disclosure is saved. The deployed replay/evidence/save/reload checks passed; the public walkthrough played and reported a 141.257-second duration.
+4. Completed: the DEV article is published under Reet Singh with the required challenge tags and embedded demo.
 5. Optional partner paths need their own live evidence before those categories are added. Backboard memory deletion controls remain a wider-launch follow-up.

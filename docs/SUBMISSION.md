@@ -1,5 +1,9 @@
 # UNWATCH submission readiness
 
+**Published on 25 October 2026:** https://dev.to/reet_singh_ee97da2986538e/unwatch-finding-what-a-second-tutorial-actually-adds-4hm0
+The owner authorized publication. The live post includes the YouTube demo embed, both challenge tags and the AI-assisted disclosure.
+
+
 Target: [Hacktoberfest Open-Source AI Challenge Week 3](https://dev.to/challenges/hacktoberfest-week3-2026-10-19). Deadline: **October 25, 2026, 11:59 PM PDT / October 26, 12:29 PM IST**. See [official rules](https://dev.to/page/hacktoberfest-week3-2026-10-19-contest-rules).
 
 ## Ready
